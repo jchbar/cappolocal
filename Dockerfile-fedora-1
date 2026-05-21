@@ -1,0 +1,58 @@
+# Usamos la imagen EOL de Debian Lenny requerida por la aplicación legada 
+FROM docker.io/debian/eol:lenny
+
+# Forzar los repositorios hacia el archivo histórico oficial de Debian 
+RUN echo "deb http://archive.debian.org/debian/ lenny main contrib non-free" > /etc/apt/sources.list
+
+# Variables de entorno críticas para deshabilitar interacciones 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV FORCE_NONROOT=1
+
+# Evitar que los scripts de empaquetado intenten iniciar o manipular servicios del sistema
+RUN echo -e '#!/bin/sh\nexit 101' > /etc/runlevel.policy-rc.d \
+    && chmod +x /etc/runlevel.policy-rc.d \
+    && ln -sf /etc/runlevel.policy-rc.d /usr/sbin/policy-rc.d
+
+# TRUCO PARA PODMAN ROOTLESS (Mapeo de usuarios estáticos)
+RUN echo "ssl-cert:x:102:" >> /etc/group \
+    && echo "postgres:x:103:" >> /etc/group \
+    && echo "www-data:x:33:" >> /etc/group || true \
+    && echo "ssl-cert:x:102:102:ssl-cert-falso:/nonexistent:/bin/false" >> /etc/passwd || true
+
+# Ejecutamos la instalación directa 
+RUN apt-get update && apt-get install -y --force-yes \
+    apache2-mpm-prefork \
+    libapache2-mod-php5 \
+    php5-mysql \
+    php5-gd \
+    php5-curl \
+    && apt-get clean
+
+# Configurar el php.ini con los parámetros requeridos por el sistema [
+RUN sed -i 's/register_globals = Off/register_globals = On/g' /etc/php5/apache2/php.ini \ 
+ && sed -i 's/magic_quotes_gpc = Off/magic_quotes_gpc = On/g' /etc/php5/apache2/php.ini \ 
+ && sed -i 's/memory_limit = 128M/memory_limit = 24M/g' /etc/php5/apache2/php.ini 
+
+# --- CORRECCIÓN DE PUERTOS DE APACHE --- 
+RUN echo "Listen 8080" > /etc/apache2/ports.conf
+RUN sed -i 's/<VirtualHost \*:*.*>/<VirtualHost \*:8080>/g' /etc/apache2/sites-available/default 
+
+# --- RE-DIRECCIÓN DEL ARCHIVO PID DE APACHE ---
+# Modificamos la variable de entorno para que el PID se guarde en la ruta con permisos abiertos
+RUN sed -i 's|export APACHE_PID_FILE=/var/run/apache2.pid|export APACHE_PID_FILE=/var/run/apache2/apache2.pid|g' /etc/apache2/envvars
+
+# --- CORRECCIÓN DE PERMISOS DE LOGS Y EJECUCIÓN PARA KEEP-ID ---
+RUN ln -sf /dev/stdout /var/log/apache2/access.log \
+ && ln -sf /dev/stderr /var/log/apache2/error.log \
+ && mkdir -p /var/log/apache2 /var/run/apache2 /var/lock/apache2 \
+ && chmod -R 777 /var/log/apache2 /var/run/apache2 /var/lock/apache2
+
+EXPOSE 8080 
+
+RUN mkdir -p /var/run/apache2 \
+ && chown -R www-data:www-data /var/run/apache2
+
+RUN echo "PidFile /tmp/apache2.pid" > /etc/apache2/conf-available/pidfile.conf \
+ && a2enconf pidfile
+
+CMD ["apache2ctl", "-D", "FOREGROUND"]

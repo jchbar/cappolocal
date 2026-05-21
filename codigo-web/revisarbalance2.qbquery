@@ -1,0 +1,13 @@
+﻿select cue_codigo, count(cue_codigo) from sgcaf810 group by cue_codigo order by count(cue_codigo) desc;
+select * from sgcaf810 where cue_nivel!='7' and length(trim(cue_codigo))=length('5-07-01-06-01-01-0001');
+select * from sgcaf810 where cue_nivel='7' and length(trim(cue_codigo))!=length('5-07-01-06-01-01-0001') order by cue_codigo;
+select * from sgcaf810 where cue_nivel!='6' and length(trim(cue_codigo))=length('5-07-01-06-01-01');
+select * from sgcaf810 where cue_nivel!='5' and length(trim(cue_codigo))=length('5-07-01-06-01');
+select * from sgcaf810 where cue_nivel!='4' and length(trim(cue_codigo))=length('5-07-01-06');
+select * from sgcaf810 where cue_nivel!='3' and length(trim(cue_codigo))=length('5-07-01');
+select sum(com_monto1), sum(com_monto2) from sgcaf820 where substr(com_fecha,1,7)='2012-10' and length(trim(com_cuenta))=length('5-07-01-06-01-01-0001');
+select * from sgcaf820 where substr(com_fecha,1,7)='2012-10' and length(trim(com_cuenta))!=length('5-07-01-06-01-01-0001');
+select com_nrocom, sum(com_monto1), sum(com_monto2),sum(com_monto1)-sum(com_monto2) from sgcaf820 where substr(com_fecha,1,7)='2012-12' and length(trim(com_cuenta))=length('5-07-01-06-01-01-0001') group by com_nrocom order by sum(com_monto1)-sum(com_monto2) desc;
+select * from sgcaf820 where com_nrocom='12100900882';
+select * from sgcaf810 where cue_codigo='4-02-02-07-01-01-';
+delete from sgcaf810 where cue_codigo='4-02-02-07-01-01-';

@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-fedora
+
+    container_name: web-app
+
+    ports:
+      - "8081:80"
+
+    volumes:
+      - ./codigo-web:/var/www/html:Z
+
+    security_opt:
+      - label=disable
+
+    restart: unless-stopped
+
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:5.5.62
+
+    container_name: mysql-db
+
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123**
+      MYSQL_DATABASE: cajaweb_db
+      MYSQL_USER: jhernandez
+      MYSQL_PASSWORD: abc123**
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - ./mysql:/var/lib/mysql:Z
+
+    security_opt:
+      - label=disable
+
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+
+    container_name: phpmyadmin
+
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+
+    ports:
+      - "8082:80"
+
+    security_opt:
+      - label=disable
+
+    depends_on:
+      - mysql-db
+
+    restart: unless-stopped

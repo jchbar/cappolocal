@@ -1,0 +1,59 @@
+version: '3.3'
+
+services:
+  # Servidor de Base de Datos aislado y exclusivo para Cajaweb
+  mysql-db:
+    image: docker.io/library/mysql:5.5
+    container_name: mysql-cajaweb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123**
+      MYSQL_DATABASE: cajaweb_db
+    networks:
+      - red-cajaweb-aislada
+    volumes:
+      - datos_mysql_cajaweb:/var/lib/mysql:Z
+    # SE ELIMINÓ "userns_mode: keep-id" DE AQUÍ para permitir mapeo nativo de uid uid-rootless
+
+  # Servidor Web aislado y exclusivo para Cajaweb
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-fedora
+    security_opt:
+      - "label=disable"
+    container_name: app-cajaweb
+    restart: always
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./codigo-web:/var/www/cajaweb:Z
+    networks:
+      - red-cajaweb-aislada
+    userns_mode: "keep-id" # Aquí se mantiene bien para modificar código localmente
+    depends_on:
+      - mysql-db
+
+  # Administrador gráfico exclusivo para Cajaweb
+  phpmyadmin:
+    image: docker.io/library/phpmyadmin:5
+    container_name: phpmyadmin-cajaweb
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=mysql-db
+      - PMA_USER=root
+      - PMA_PASSWORD=abc123**
+    networks:
+      - red-cajaweb-aislada
+    userns_mode: "keep-id"
+    depends_on:
+      - mysql-db
+
+networks:
+  red-cajaweb-aislada:
+    driver: bridge
+
+volumes:
+  datos_mysql_cajaweb:

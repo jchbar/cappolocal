@@ -1,0 +1,203 @@
+body {height:100%;font-size:80%;margin:0} 
+
+body, textarea, input, select {font-family: 'Trebuchet MS',Tahoma,Verdana,Arial}
+.arial {font-family: Arial,Tahoma,Verdana,Arial}
+.cour {font-family: courier}
+
+#arriba {position:relative;width:100%;height:80px;border-bottom:1px solid #a0a0a0}
+#menusizda {clear:both;float:left;display:inline;width:14%;margin-right:3px;margin-left:3px}
+
+table {font-size:90%;empty-cells:show;border-collapse: collapse;border:1px solid #b9b9b9}
+table td, th {padding:0 3px}
+table th{text-align:center}
+table td.dcha, th.dcha {text-align:right}
+table.100 {width:100%}
+
+table.basica td.blanco {background:white}
+table.basica td, table.basica th {border: inset 2px;border-color:white}
+
+table.listados td, th {padding:3px;border:1px solid #c0c0c0;text-align:right}
+table.listados th.centro {text-align:center}
+table.listados td.izda {text-align:left}
+
+table.entradadatos {border:0px;font-size:100%}
+
+.anchomin {white-space:nowrap;width:0px}
+.centro {text-align:center}
+
+textarea, input, select{
+vertical-align:middle;
+padding:0px;
+margin-bottom:3px;
+font-size:.9em
+}
+
+.borde {
+border:2px outset;
+padding : 15px; 
+margin : 5px;
+}
+.yell {background:#ffffcc}
+
+.inline {display:inline}
+h2{font-size:100%}
+h3{font-size:90%;display:inline}
+
+.azul {color:#0000ff}
+.verde {COLOR:#278D07}
+.verdeb {COLOR:#808000;font-weight:bold}
+.rojo {COLOR:#800000}
+.b {font-weight:bold}
+.u {text-decoration:underline}
+.bi {font-weight:bold;font-style:italic;color:#909000}
+.peq {font-size:.8em}
+.dcha {text-align:right}
+
+.cerrar {
+position:absolute;
+top:2px;
+right:2px
+}
+
+#entradaform {float:left;display:inline;padding-left:10px;font-size:90%;border:1px solid black}
+
+legend {
+	padding: 2px;
+	font-weight: bold;
+	text-align: right;
+	font-size:0.9em
+}
+
+fieldset {float:left;border:1px solid #778;padding:5px;margin:5px}
+
+#barra {color:white}
+
+#div0 {float:left;padding-left:10px;padding-top:5px}
+#div1 {width:60%;float:left;display:inline}
+#div2 {width:38%;float:right;display:inline}
+
+#pag {border:1px solid #c0c0c0;background:white;padding:5px}
+.pag {float:left;display:inline;padding:5px;margin-top:3px}
+.white {background:white}
+.wid99 {width:99%}
+.wid83 {width:83%}
+a{text-decoration : none;}
+a:hover {
+text-decoration : underline;
+}
+a.cwhite {color:white}
+img {border:0;}
+
+#esperar {
+font-size : 1.1em; 
+color : #800000; 
+font-weight : bold;
+text-align:center
+}
+.centrada{
+position:absolute; top:30%; left:65%; width:30%; height:40%
+}
+
+.transp {
+background:white;filter:Alpha(Opacity=80);-khtml-opacity:.8;-moz-opacity:.8;opacity:.8}
+#linea{
+clear:both;width:100%;height:5px;background-image:url(degradhoriz.png);
+background-repeat:repeat-x;background-position:top;font-size:5px;
+filter:Alpha(Opacity=50);-khtml-opacity:.5;-moz-opacity:.5;opacity:.5
+}
+.solocontable {
+padding:5px;
+border:1px solid #c0c0c0;
+background:#FFEDED;
+}
+.hoy {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000099
+}
+
+.domingo {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 990000
+}
+
+.diario {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000000
+}
+.tform {
+	border-width: 1px;
+	border-color: 75263C;
+	border-style: solid;
+}
+.altn  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #666666;
+}
+
+.tit  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #333333;
+	font-weight: bold;
+}
+	.suggestionsBox {
+		position: relative;
+		left: 30px;
+		margin: 10px 0px 0px 0px;
+		width: 600px;
+		background-color: #212427;
+		-moz-border-radius: 7px;
+		-webkit-border-radius: 7px;
+		border: 2px solid #000;	
+		color: #fff;
+	}
+	
+	.suggestionList {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.suggestionList li {
+		
+		margin: 0px 0px 3px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	.suggestionList li:hover {
+		background-color: #659CD8;
+	}
+
+	.suggestionsBox2 {
+		position: relative;
+		left: 30px;
+		margin: 10px 0px 0px 0px;
+		width: 600px;
+		background-color: #212427;
+		-moz-border-radius: 7px;
+		-webkit-border-radius: 7px;
+		border: 2px solid #000;	
+		color: #fff;
+	}
+	
+	.suggestionList2 {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.suggestionList2 li {
+		
+		margin: 0px 0px 3px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	.suggestionList2 li:hover {
+		background-color: #659CD8;
+	}

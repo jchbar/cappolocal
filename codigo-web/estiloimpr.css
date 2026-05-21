@@ -1,0 +1,33 @@
+body {
+margin:5pt;
+background: #fff;
+color: #000;
+font-family: Arial, sans-serif;
+font-size: 10pt;
+}
+
+#menusizda, #arriba, .noimpri {
+   display: none;
+}
+
+.wid99 {width:99%}
+table.entradadatos {border:0px}
+table.entradadatos td {border:0px}
+table.listados td {text-align:right}
+
+table {width:98%;font-size:90%;border: outset 1px; border-collapse: collapse; border-spacing: 1px;empty-cells:show}
+table {border:1px solid #c0c0c0}
+table td, th {border:1px solid #c0c0c0;padding:3px;color:black;background:white}
+table th.centro {text-align:center}
+table td.izda {text-align:left}
+table td.dcha, th.dcha {text-align:right}
+
+.anchomin {white-space:nowrap;width:0px}
+.centro {text-align:center}
+.b {font-weight:bold}
+
+
+@page angosta {size: 9cm 18cm}
+@page rotada {size: landscape}
+DIV {page: angosta}
+TABLE {page: rotada}

@@ -1,0 +1,85 @@
+body {background:#FDDBAF} 
+
+table.basica tr {background:#E1E1CB} 
+table.basica th {background:#D6FCD6;color:black}
+table.basica td.verde {background:#D6FCD6}
+table.hover tr:hover {background:#ffffcc}
+.cour {font-family: courier}
+
+legend {
+	background:#9F0303;
+	border: 1px solid #31397B;
+	color: white;
+}
+
+#barra {background:#9F0303}
+
+.navv {
+margin :0; 
+padding : 0px;
+font-size :.9em;
+background:white;
+}
+
+.navv a {
+display : block;padding-left:1em
+} 
+
+.navv a:hover {
+text-decoration:none
+} 
+
+.navv li#active a {
+color:white;background-color: #FDDBAF;color:black
+} 
+
+div.redond1{ margin: 3px 0px 9px 3px}
+div.redond2{ margin: 3px 0px 9px 3px}
+
+b.rtop, b.rbottom{display:block}
+b.rtop b{display:block;height: 1px;overflow: hidden; background:#D6FCD6}
+b.rbottom b{display:block;height: 1px;overflow: hidden; background:white}
+b.rbottom1 b{display:block;height: 1px;overflow: hidden; background:#D6FCD6}
+b.r1{margin: 0 5px}
+b.r2{margin: 0 3px}
+b.r3{margin: 0 2px}
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px}
+div.tit{font-size: 100%;margin:0;padding: 0 0 0px 3px;background:#D6FCD6}
+div.tit a{color:black;text-decoration:none}
+div.tit a:hover{text-decoration:none}
+.tform {
+	border-width: 1px;
+	border-color: 75263C;
+	border-style: solid;
+}
+.altn  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #666666;
+}
+
+.tit  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #333333;
+	font-weight: bold;
+}
+.hoy {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000099
+}
+
+.domingo {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 990000
+}
+
+.diario {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000000
+}

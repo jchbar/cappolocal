@@ -1,0 +1,50 @@
+/mysql
+/public/storage
+/storage/*.key
+/.env
+/.env.backup
+/.idea
+/.vscode
+/.phpunit.result.cache
+/.phpstorm.meta.php
+/.history
+/.cache
+/.phpunit.result.cache
+/.vscode
+/.idea
+/.DS_Store
+
+# Composer
+/vendor
+/composer.lock
+
+# NPM / Yarn
+/node_modules
+/package-lock.json
+/yarn.lock
+
+# Logs
+/storage/logs
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/views
+
+# IDEs y editores
+/.idea
+/.vscode
+*.sublime-workspace
+*.sublime-project
+
+# Otros archivos temporales
+*.log
+*.cache
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+/backup_data
+/data
+/tests
+*zip
+*txt

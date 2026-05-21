@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  # Servidor de Base de Datos (Compatible con MySQL 5.0.51a)
+  mysql-db:
+    image: docker.io/library/mysql:5.5
+    container_name: mysql-cajaweb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123**
+      MYSQL_DATABASE: cajaweb
+    networks:
+      - red-legado
+    volumes:
+      - datos_mysql:/var/lib/mysql
+
+  # Servidor Web (Apache 2.2.8 + PHP 5.2.6)
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-cajaweb
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - ./codigo-web:/var/www/cajaweb
+    networks:
+      - red-legado
+    depends_on:
+      - mysql-db
+
+  # Interfaz Gráfica para la Base de Datos (Versión 5 Estable)
+  phpmyadmin:
+    image: docker.io/library/phpmyadmin:5
+    container_name: phpmyadmin-cajaweb
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=mysql-db
+      - PMA_USER=root
+      - PMA_PASSWORD=abc123**
+    networks:
+      - red-legado
+    depends_on:
+      - mysql-db
+
+# Red unificada dentro del mismo YML
+networks:
+  red-legado:
+    driver: bridge
+
+volumes:
+  datos_mysql:

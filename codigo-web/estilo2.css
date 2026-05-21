@@ -1,0 +1,140 @@
+body {background:#E5EFFF;} 
+
+table.basica tr {background:#FFF3FF} 
+table.basica th {background:#C3D9FF;color:white}
+table.basica td.verde {background:#C3D9FF}
+table.hover tr:hover {background:#C0FFC0}
+.cour {font-family: courier}
+
+legend {
+	background:#3A2E78;
+	border: 1px solid #31397B;
+	color: white;
+}
+
+#barra {background:#3A2E78}
+
+.navv {
+margin :0; 
+padding : 0px;
+font-size :.9em;
+background:#FFEEB5;
+}
+
+.navv a {
+display : block;padding-left:1em
+}
+
+.navv a:hover {
+text-decoration:none
+} 
+
+.navv li#active a {
+background-color: #E5EFFF
+} 
+
+div.redond1{ margin: 3px 0px 9px 3px}
+div.redond2{ margin: 3px 0px 9px 3px}
+
+b.rtop, b.rbottom{display:block}
+b.rtop b{display:block;height: 1px;overflow: hidden; background:#C3D9FF}
+b.rbottom b{display:block;height: 1px;overflow: hidden; background:#FFEEB5}
+b.rbottom1 b{display:block;height: 1px;overflow: hidden; background:#C3D9FF}
+b.r1{margin: 0 5px}
+b.r2{margin: 0 3px}
+b.r3{margin: 0 2px}
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px}
+div.tit{font-size: 100%;margin:0;padding: 0 0 0px 3px;background:#C3D9FF}
+div.tit a{color:black;text-decoration:none}
+div.tit a:hover{text-decoration:none}
+.hoy {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000099
+}
+
+.domingo {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 990000
+}
+
+.diario {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: 000000
+}
+.tform {
+	border-width: 1px;
+	border-color: 75263C;
+	border-style: solid;
+}
+.altn  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #666666;
+}
+
+.tit  {
+	font-family : verdana,arial,helvetica;
+	font-size : 10pt;
+	color: #ffffff;
+	background-color: #333333;
+	font-weight: bold;
+}
+	.suggestionsBox {
+		position: relative;
+		left: 30px;
+		margin: 10px 0px 0px 0px;
+		width: 600px;
+		background-color: #212427;
+		-moz-border-radius: 7px;
+		-webkit-border-radius: 7px;
+		border: 2px solid #000;	
+		color: #fff;
+	}
+	
+	.suggestionList {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.suggestionList li {
+		
+		margin: 0px 0px 3px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	.suggestionList li:hover {
+		background-color: #659CD8;
+	}
+
+	.suggestionsBox2 {
+		position: relative;
+		left: 30px;
+		margin: 10px 0px 0px 0px;
+		width: 600px;
+		background-color: #212427;
+		-moz-border-radius: 7px;
+		-webkit-border-radius: 7px;
+		border: 2px solid #000;	
+		color: #fff;
+	}
+	
+	.suggestionList2 {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.suggestionList2 li {
+		
+		margin: 0px 0px 3px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	.suggestionList2 li:hover {
+		background-color: #659CD8;
+	}

@@ -1,0 +1,293 @@
+<?php
+//Copyright (C) 2000-2006  Antonio Grandío Botella http://www.antoniograndio.com
+//Copyright (C) 2000-2006  Inmaculada Echarri San Adrián http://www.inmaecharri.com
+
+//This file is part of Catwin.
+
+//CatWin is free software; you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation; either version 2 of the License, or
+//(at your option) any later version.
+
+//CatWin is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details:
+//http://www.gnu.org/copyleft/gpl.html
+
+//You should have received a copy of the GNU General Public License
+//along with Catwin Net; if not, write to the Free Software
+//Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+include("head.php");
+
+if (!$link OR !$_SESSION['empresa']) {
+	include("noempresa.php");
+	exit; 
+}
+
+if ($_GET['emp'] == 1) {$_GET['n'] = 1;}
+
+if ($_GET['n'] == 1) {
+	$onload="onload=\"foco('asiento')\"";
+	//$result = mysql_query("SELECT max(asiento) FROM asientos");
+	//$row = mysql_fetch_row($result);
+	//$asiento = $row[0] + 1;
+/*
+	$fila = mysql_fetch_array(mysql_query("SELECT * FROM sgcaf8co"));
+	$asiento = $fila[0] + 1;
+	mysql_query("UPDATE sgcaf8co SET con_compr = '$asiento' WHERE 1");
+	// Cojo el valor de la fecha en que se hizo el último Asiento
+	$result = mysql_query("SELECT date_format(con_ultfec,'%d/%m/%y') AS ultfechax FROM sgcaf8co");
+	$row = mysql_fetch_array($result);
+	$fecha = $row[0];
+*/
+} else {
+/*
+	$onload="onload=\"foco('cuenta11')\"";
+	$readonly=" readonly='readonly'";
+	$asiento = $_POST['asiento'];
+	$fecha = $_POST['fecha'];
+	$fecha = $_POST['fecha'];
+	$tipo =$_POST['tipo'];
+	$debcre= $_POST['debcre'];
+	$cuenta1= $_POST['cuenta1'];
+	$referencia =$_POST['referencia'];
+	$elmonto=$_POST['elmonto'];
+*/
+}
+
+?>
+
+<body <?php if (!$bloqueo) {echo $onload;}?>>
+
+<?php
+
+include("arriba.php");
+$menu11=1;include("menusizda.php");
+
+if (!$cedula) {
+
+	echo "<form method='post' name='form1'>\n";
+	echo "Cédula: <input type='text' name='cedula' size='10' maxlength='10'>\n";
+	echo "<input type='submit' name = 'formu' value='Buscar Estado de Cuenta'>\n";
+	echo "</form>\n";
+	echo "</div></body></html>";
+	exit;
+
+}
+/*
+<input type='text' name='lafecha' size='8' maxlength='8' value="<?php echo $fecha;>" <?php echo $readonly;>>
+<input type="button" name="selfecha" value="..."  onclick="displayDatePicker('fecha','','dmy');">
+*/
+
+/*
+if (!$_POST['asiento']) {
+	escribe_formulario_fecha_vacio("fecha","form1",'',2,$readonly); 
+	echo '<p /> ';
+	$temp = "Primer Registro:";
+} else {
+	echo $fecha.'<p />';
+	echo "<input type = 'hidden' value ='".$fecha."' name='fecha'>"; 
+	$temp = "Siguiente Registro:";
+	$expli = mysql_fetch_array(mysql_query("SELECT enc_explic FROM sgcaf830 WHERE enc_clave = '".$_POST['asiento']."'"));
+}
+*/
+
+if ($cedula) {
+	$result = mysql_query("SELECT * FROM sgcaf200 WHERE ced_prof = '$cedula' ");
+	if (mysql_num_rows($result) == 0) {
+		echo "<p />Cédula <span class='b'>$cedula</span> no esta registrada</div></body></html>";
+				//		exit;
+	}
+	else 
+	{
+	$fila = mysql_fetch_array($result);
+
+$cededo=$cedula;
+ echo "<a target=\"_blank\" href=\"edoctapdf.php?cedula=$cedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Estado de Cuenta</a>";
+   echo "<p/ >";
+//echo '<fieldset><legend>'.$fila['apel_prof'].' '.$fila['nombr_prof'].'</legend>';
+echo "<table align='center' class='basica'>";
+echo '<tr><th width="175">Nombre del Asociado: </th><td class="blanco b" width="230">'.$fila['ape_prof'].' '.$fila['nombr_prof'].'</td><th width="75">Cédula</th><td class="blanco b" width="80">'.$fila['ced_prof'].'</td><th width="75">Código</th><td class="blanco b" width="80">'.$fila['cod_prof'].'</td></tr>';
+echo '<tr><th width="175">Fecha Ingreso Caja: </th><td class="blanco b" width="230">'.convertir_fechadmy($fila['f_ing_capu']).'</td><th width="75">Decanato</th><td class="blanco b" width="175">';
+$elcescuela=$fila['escuela'];
+$sql="select codigo, nombre from escuelas where codigo = '$elcescuela'";
+$resultado=mysql_query($sql);
+$fila2 = mysql_fetch_assoc($resultado);
+echo $fila2['nombre'];
+echo '<th width="75">Departamento </th><td class="blanco b" width="175">';
+$elcdpto=$fila['dept_prof'];
+$sql="select escdpto, escuela from sgcafeyd where escdpto = '$elcdpto'";
+$resultado=mysql_query($sql);
+$fila2 = mysql_fetch_assoc($resultado);
+echo $fila2['escuela'];
+echo '</td></tr>';
+echo '<tr><th width="175">Fecha Ingreso UCLA: </th><td class="blanco b" width="230">'.convertir_fechadmy($fila['f_ing_ucla']).'</td><th width="175">Cargo: </th><td class="blanco b" width="230">'.$fila['cargo'].'</td><th width="175">Estatus: </th><td  class="blanco b" width="230">'.$fila['statu_prof'].'</td></tr>';
+echo '</table>';
+
+echo "<table align='center' class='basica'>";
+$cedula=substr($cedula,0,4).'.'.substr($cedula,4,3).'.'.substr($cedula,7,3);
+$sql="select * from unido where cedula= '$cedula' and ano='2004' order by ano";
+
+// $fila2=mysql_query($sql);
+// $fila2=mysql_fetch_assoc($fila2);  
+// echo $sql;
+// echo "<a target=\"_blank\" href=\"dividen2.php\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">  >>>Imprimir Resultado<<<</a></h2>"; 
+
+echo '<tr><th align="center" colspan="6" width="800">Descripción</th><th colspan="1" width="100">Ahorros Bs.F.</th><th colspan="2" width="75">Total Bs.F.</th></tr>';
+$sql_aporte="SELECT * FROM aportep WHERE tipo = 'R' ORDER BY fecha DESC LIMIT 1 ";
+$resul_aporte=mysql_query($sql_aporte);
+$faporte=mysql_fetch_assoc($resul_aporte);
+echo '<tr><td align="left" colspan="6" width="175" class="blanco" >Ahorro Socio al: '.convertir_fechadmy($faporte['fecha']).'</td><td colspan="1" align="right" width="100"class="blanco" >'.number_format($fila['hab_f_prof'],2,'.',',').'</td></tr>';
+$sql_aporte="SELECT * FROM aportep WHERE tipo = 'A' ORDER BY fecha DESC LIMIT 1 ";
+$resul_aporte=mysql_query($sql_aporte);
+$faporte=mysql_fetch_assoc($resul_aporte);
+echo '<tr><td align="left" colspan="6" width="175" class="blanco" >Ahorro UCLA al: '.convertir_fechadmy($faporte['fecha']).'</td><td colspan="1" align="right" width="100" class="blanco" >'.number_format($fila['hab_f_empr'],2,'.',',').'</td></tr>';
+echo '<tr><td align="left" colspan="6" width="175" class="blanco" >VeBono 2009</td><td colspan="1" align="right" width="100" class="blanco" >'.number_format($fila['hab_opsu'],2,'.',',').'</td></tr>';
+echo '<tr><td align="left" colspan="6" width="175" class="blanco" >Ahorro Voluntarios </td><td colspan="1" align="right" width="100" class="blanco" >'.number_format($fila['hab_f_extr'],2,'.',',').'</td></tr>';
+echo '<tr><td align="left" colspan="6" width="175" class="blanco" >Ahorro Capitalizables </td><td colspan="1" align="right" width="100" class="blanco" >'.number_format($fila['hab_f_capi'],2,'.',',').'</td></tr>';
+
+$totalahorros=$fila['hab_f_prof']+$fila['hab_f_extr']+$fila['hab_f_capi']+$fila['hab_f_empr']+$fila['hab_opsu'];
+echo '<tr><td align="left" colspan="7" width="175" class="blanco b" >SALDO AHORROS </td><td colspan="1" align="right" width="100"class="blanco b" >'.number_format(($totalahorros),2,'.',',').'</td></tr>';
+
+
+$sql="select * from sgcaf310, sgcaf360 where (cedsoc_sdp='$cedula' and codpre_sdp=cod_pres and stapre_sdp='A' and ! renovado) order by f_1cuo_sdp";
+$result=mysql_query($sql);
+$registros12=mysql_num_rows($result);
+if ($registros12 > 0) {
+echo '<tr><th align="center" colspan="8" width="800">SALDO DE PRESTAMOS AL </th></tr>';
+echo '<tr><th align="center" width="50"># Prest.</th><th align="center" width="250">Tipo de Préstamo</th><th align="center" width="100">Monto</th><th align="center" width="100"># NC</th><th align="center" width="100">CC</th><th align="center" width="100">Cuota Bs.F</th><th align="center" width="100">1er Dcto.</th><th align="center" width="100">Saldo</th></tr>';
+//echo $sql.'<br>';
+$result=mysql_query($sql);
+$fianzas = $afectan = $noafectan = $semanal = 0;
+while($row=mysql_fetch_assoc($result)) {
+	echo '<tr><td align="center" width="50" class="blanco">'.$row['nropre_sdp'].'</td><td align="center" width="250" class="blanco">'.$row['descr_pres'].'</td><td align="center" width="100" class="blanco">'.number_format($row['monpre_sdp'],2,'.',',').'</td><td align="center" width="100" class="blanco">'.number_format($row['nrocuotas'],0,',','.').'</td><td align="center" width="100" class="blanco">'.number_format($row['ultcan_sdp'],0,',','.').'</td><td align="center" width="100" class="blanco">'.number_format($row['cuota_ucla'],2,'.',',').'</td><td align="center" width="100" class="blanco">'.convertir_fechadmy ($row['f_1cuo_sdp']).'</td><td align="right" width="100" class="blanco">'.number_format(($row['monpre_sdp']-$row['monpag_sdp']),2,'.',',').'</td></tr>';
+	if ($row['retab_pres']==1)
+		$afectan +=($row['monpre_sdp']-$row['monpag_sdp']);
+	else {
+		$noafectan += ($row['monpre_sdp']-$row['monpag_sdp']);
+//		echo ($row['monpre_sdp']-$row['monpag_sdp']).'<br>';
+	}
+	if ($row['dcto_sem']==1)
+		$semanal += $row['cuota_ucla'];
+   }
+}
+$fiado=0;
+//$sql="select *, ape_prof, nombr_prof, (monto_fia-monlib_fia) as saldo_fia from sgcaf320, sgcaf200 where (codsoc_fia=cod_prof) and (codfia_fia='".$fila['cod_prof']."') and ((monto_fia-monlib_fia) > 0) order by codsoc_fia";
+$sql="select *, ape_prof, nombr_prof, (monto_fia-monlib_fia) as saldo_fia from sgcaf320, sgcaf200 where (codsoc_fia='".$fila['cod_prof']."') and (codfia_fia=cod_prof) and (tipmov_fia='F') and ((monto_fia-monlib_fia) > 0) order by codsoc_fia";
+// $sql="select *, (monto_fia-monlib_fia) as saldo_fia from sgcaf320 where (codsoc_fia='".$fila['cod_prof']."') and (tipmov_fia='F') and ((monto_fia-monlib_fia) > 0) order by codsoc_fia";
+//echo $sql.'<br>';
+$afianzadores=mysql_query($sql);
+$registros1=mysql_num_rows($afianzadores);
+if ($registros1 > 0) {
+	echo '<tr><th align="left" colspan="8" width="175">FIANZAS RECIBIDAS</th></tr>';
+	echo '<tr><th align="center" width="50"># Prest.</th><th align="center" width="250">Fiado</th><th align="center" width="100" colspan="2">Monto Otorgado</th><th align="center" width="100" colspan="2">Monto Liberado</th><th align="center" width="100" colspan="2">Monto por Liberar</th></tr>';
+	while($afianzado=mysql_fetch_assoc($afianzadores)) {
+		echo '<tr><td align="center" width="50" class="blanco">'.$afianzado['nropre_fia'].'/'.$afianzado['codfia_fia'].'</td><td align="center" width="250" class="blanco">'.$afianzado['ape_prof'].' '.$afianzado['nombr_prof'].'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($afianzado['monto_fia'],2,'.',',').'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($afianzado['monlib_fia'],2,'.',',').'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($afianzado['saldo_fia'],2,'.',',').'</td></tr>';
+//		$fiado+= ($afianzado['saldo_fia']);
+	   }
+	}
+
+$sql="select *, ape_prof, nombr_prof, (monto_fia-monlib_fia) as saldo_fia from sgcaf320, sgcaf200 where (codsoc_fia=cod_prof) and (codfia_fia='".$fila['cod_prof']."') and ((monto_fia-monlib_fia) > 0) order by codsoc_fia";
+// $sql="select *, (monto_fia-monlib_fia) as saldo_fia from sgcaf320 where (codsoc_fia='".$fila['cod_prof']."') and (tipmov_fia='F') and ((monto_fia-monlib_fia) > 0) order by codsoc_fia";
+//echo $sql.'<br>';
+
+$fiadores=mysql_query($sql);
+$registros=mysql_num_rows($fiadores);
+if ($registros > 0) {
+	echo '<tr><th align="left" colspan="8" width="175">FIANZAS OTORGADAS</th></tr>';
+	echo '<tr><th align="center" width="50"># Prest.</th><th align="center" width="250">Fiador</th><th align="center" width="95" colspan="2">Monto Otorgado</th><th align="center" width="100" colspan="2">Monto Liberado</th><th align="center" width="100" colspan="2">Saldo Actual</th></tr>';
+	while($fiador=mysql_fetch_assoc($fiadores)) {
+		echo '<tr><td align="center" width="50" class="blanco">'.$fiador['nropre_fia'].'/'.$fiador['codfia_fia'].'</td><td align="center" width="250" class="blanco">'.$fiador['ape_prof'].' '.$fiador['nombr_prof'].'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($fiador['monto_fia'],2,'.',',').'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($fiador['monlib_fia'],2,'.',',').'</td><td align="center" width="100" class="blanco" colspan="2">'.number_format($fiador['saldo_fia'],2,'.',',').'</td></tr>';
+	$fianzas+=($fiador['saldo_fia']);
+	}
+}
+echo "<table align='center' class='basica'>";
+echo '<tr><th align="right" colspan="8" width="175"></th></tr>';
+echo '<tr><td align="right" width="300" class="blanco" colspan="2">Total Saldos Fianzas Recibidas</td><td align="right" width="100" class="blanco" colspan="1">'.number_format($fiado,2,'.',',').'</td><td align="right" width="360" class="blanco" colspan="4">Total Saldos Fianzas Otorgadas</td><td align="right" width="100" class="b" colspan="1">'.number_format($fianzas,2,'.',',').'</td></tr>';
+echo '<tr><td align="right" width="300" class="blanco" colspan="2">Total Saldos que NO Afectan Disponibilidad</td><td align="right" width="100" class="blanco" colspan="1">'.number_format($noafectan,2,'.',',').'</td><td align="right" width="360" class="blanco" colspan="4">Total Saldos que Afectan Disponibilidad</td><td align="right" width="100" class="b" colspan="1">'.number_format($afectan,2,'.',',').'</td>';
+
+echo '<tr><td align="right" width="300" class="blanco" colspan="2">Total Cuota a Banco Semanal</td><td class="blanco" align="right" width="100"class="blanco" colspan="1">'.number_format($semanal,2,'.',',').'</td>';
+$sql="select por_dispon from sgcaf100 limit 1";
+$result=mysql_query($sql);
+$row=mysql_fetch_assoc($result);
+$reserva=$totalahorros*($row['por_dispon']/100);
+
+echo '<td align="right" width="360" class="blanco" colspan="4">Monto por Reserva Legal ('.number_format($row['por_dispon'],2,'.','.').'%)</td><td align="right" width="100" class="b" colspan="1">'.number_format($reserva,2,'.',',').'</td>';
+// nuevo 2012-10-20
+$sql="select * from sgcaf000 where tipo ='Reserva_P_Esp02'";
+$a_sql=mysql_query($sql);
+$r_sql=mysql_fetch_assoc($a_sql);
+$porc_esp=($r_sql['nombre']/100);
+// echo 'porcentake '.$porc_esp;
+$reserva2=0;
+$reserva2=$noafectan * $porc_esp;
+$sql="select * from sgcaf000 where tipo ='Reserva_P_Esp01'";
+$a_sql=mysql_query($sql);
+$r_sql=mysql_fetch_assoc($a_sql);
+$nombre_reserva=$r_sql['nombre'];
+echo '<tr><td align="right" class="b" colspan="7">'.$nombre_reserva.'</td><td class="b" align="right">'.number_format($reserva2,2,'.',',').'</td>';
+$disponibilidad=($totalahorros-$reserva-$reserva2)-($afectan+$fianzas);
+//$disponibilidad=($totalahorros-$reserva)-($afectan+$fianzas);
+// fin nuevo 2012-10-20
+if ($disponibilidad >= 0)
+	echo '<tr><td align="right" class="b" colspan="7">Disponibilidad Neta </td><td class="b" align="right">'.number_format($disponibilidad,2,'.',',').'</td>';
+else
+	echo '<tr><td align="right" class="rojo b" colspan="7">Disponibilidad Neta </td><td class="rojo b" align="right">'.number_format($disponibilidad,2,'.',',').'</td>';
+//
+	$sql2="select sum(hab_prof) as socio, sum(hab_ucla) as ucla from t_his200 where cod_prof = '".$fila['cod_prof']."' group by cod_prof";
+//	echo $sql2;
+	$result2=mysql_query($sql2);
+	$row2=mysql_fetch_assoc($result2);
+	echo '<tr><td align="right" class="rojo b" colspan="7">Monto Adeudado por la UCLA </td><td class="rojo b" align="right">'.number_format($row2[socio]+$row2[ucla],2,'.',',').'</td>';
+
+//	$sql2="select * from sgcaf700 where codsoc = '".$fila['cod_prof']."' order by fechareti desc limit 1";
+	$cedula=$fila['ced_prof'];
+	$estacedula=substr($cedula,0,4).'.'.substr($cedula,4,3).'.'.substr($cedula,7,3);
+	$sql2="select * from sgcaf700 where cedsoc = '".$estacedula."' order by fechareti desc limit 1";
+//	echo $sql2;
+	$result2=mysql_query($sql2);
+	$row2=mysql_fetch_assoc($result2);
+	echo '<tr><td align="right" class="rojo b" colspan="7">Ultimo retiro realizado el '.convertir_fechadmy($row2['fechareti']).' por concepto de '.$row2['motivo'].' </td><td class="rojo b" align="right">'.number_format($row2[montoreti],2,'.',',').'</td>';
+		
+//
+	echo '</table>';
+	echo "<p/ >";
+	echo "<a target=\"_blank\" href=\"edoctapdf.php?cedula=$cededo\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Estado de Cuenta</a>";
+   echo "<p/ >";
+
+	/* revisar si esta suspendido */
+	$micedula=substr($cedula,0,4).'.'.substr($cedula,4,3).'.'.substr($cedula,7,4);
+	$sqls="select * from suspende where ((cedula = '$micedula') and  (activo = 1) and (now() < suspendido))";
+//	echo $sqls;
+	$resuls=mysql_query($sqls);
+	$vacio=(mysql_num_rows($resuls) > 0?true:false);
+	$loquedebe='';
+	while ($fila2 = mysql_fetch_assoc($resuls)) {
+		echo '<h2>No se pudo descontar prestamo '.$fila2['prestamo']. ' enviado para '.$fila2['fallo'].' por un monto de '.number_format($fila2['monto'],2,'.',',').' suspendido hasta '.$fila2['suspendido']. ' reportado por '.$fila2['reporto'].'</h2>';
+//		$loquedebe.='No se pudo descontar prestamo '.$fila2['prestamo']. ' enviado para '.$fila2['fallo'].' por un monto de '.number_format($fila2['monto'],2,'.',',').' suspendido hasta '.$fila2['suspendido']. ' reportado por '.$fila2['reporto'].' / ';
+	}
+	if ($vacio == true) // esta suspendido
+		die('<h1>No puede solicitar prestamos</h1>');
+
+	/* fin revisar si esta suspendido */
+   
+
+
+   if ($accion=='') {
+   echo '<div style="clear:both"></div>';
+   echo '<p /><div class="noimpri" style="clear:both;text-align:center">';
+   echo '<a href="edocta.php"><input type="button" name="boton" value="regresar" tabindex="3">';
+   }
+   else if ($accion=='Editar') {
+   echo '<div style="clear:both"></div>';
+   echo '<p /><div class="noimpri" style="clear:both;text-align:center">';
+   echo '<a href="habsoc.php"><input type="button" name="boton" value="regresar" tabindex="3">';
+   }
+
+   
+include("pie.php");
+}
+}
+?>

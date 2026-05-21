@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<wml>
+<card id="consulta" title="Consultando.">
+<p align="left"><small> Bienvenido(a)</small><br>HERNANDEZ B. JUAN CARLOS</p><br>
+<p align="center"><small>Sin monto para 2008</small><p><br>
+<p align="left"><small>2001= 150,08 Bs.F<br>
+2002= 229,21 Bs.F<br>
+2003= 265,18 Bs.F<br>
+2004= 168,26 Bs.F<br>
+2005= 282,70 Bs.F<br>
+2006= 302,92 Bs.F<br>
+</small></p><br>
+<a href="index3.php">Consultar otro</a>
+</card> 
+</wml>
