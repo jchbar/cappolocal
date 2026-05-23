@@ -16,7 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
 */
-
 session_start();
 extract($_GET);
 extract($_POST);
@@ -73,28 +72,55 @@ $pdf->SetX(165);
 $consulta = "select * from sgcaf200 where ced_prof='$cedula'";
 $query = mysql_query($consulta);
 $socio = mysql_fetch_assoc($query);
-if ($prestamo['aprobar']==0) {
-	$cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
-	$cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
-	$cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
-	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** en calidad de prestamo. ';
-	$cuento.=' Para garantizar el pago de esta obligación doy en garantía los Ahorros que tengo en la institución' ;
-	$cuento.=' y de  no ser  suficiente  avalarán   los fiadores abajo firmantes, hasta por las cantidades especificadas. ';
-	$cuento.=' Dicho préstamo comenzará a ser descontado a partir del '.convertir_fechadmy3($prestamo['fecha_acta']);
+if ($prestamo['enUSD']==0) {
+   if ($prestamo['aprobar']==0) {
+   	$cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
+   	$cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
+   	$cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+   	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** en calidad de prestamo. ';
+   	$cuento.=' Para garantizar el pago de esta obligación doy en garantía los Ahorros que tengo en la institución' ;
+   	$cuento.=' y de  no ser  suficiente  avalarán   los fiadores abajo firmantes, hasta por las cantidades especificadas. ';
+   	$cuento.=' Dicho préstamo comenzará a ser descontado a partir del '.convertir_fechadmy3($prestamo['fecha_acta']);
+   }
+   else
+   {
+   	$cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
+   	$cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
+   	$cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+   	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** en calidad de prestamo. ';
+   	$cuento.='De igual manera, en reunión de Junta Directiva según Acta N° ' . $prestamo['nro_acta'] . ' de fecha ' . convertir_fechadmy3($prestamo['fecha_acta']).' se acordó la aprobación del prestamo arriba indicado al socio ';
+   	$cuento.= trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).', titular de la Cédula de Identidad: ';
+   	$cuento.=$socio['ced_prof'].' identificado con el Código '.$socio['cod_prof'];
+   	$cuento.=' por la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+   	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')****. ';
+   	$cuento.='Dicha operacion será acreditada en la Cuenta ';
+   	$cuento.='Nro. '.$socio['ctan_prof']. ' a partir de '.convertir_fechadmy3($prestamo['f_1cuo_sdp']);
+   }
 }
-else
-{
-	$cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
-	$cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
-	$cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
-	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** en calidad de prestamo. ';
-	$cuento.='De igual manera, en reunión de Junta Directiva según Acta N° ' . $prestamo['nro_acta'] . ' de fecha ' . convertir_fechadmy3($prestamo['fecha_acta']).' se acordó la aprobación del prestamo arriba indicado al socio ';
-	$cuento.= trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).', titular de la Cédula de Identidad: ';
-	$cuento.=$socio['ced_prof'].' identificado con el Código '.$socio['cod_prof'];
-	$cuento.=' por la cantidad de Bolívares '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
-	$cuento.='  ****Bs. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')****. ';
-	$cuento.='Dicha operacion será acreditada en la Cuenta ';
-	$cuento.='Nro. '.$socio['ctan_prof']. ' a partir de '.convertir_fechadmy3($prestamo['f_1cuo_sdp']);
+else {
+   if ($prestamo['aprobar']==0) {
+      $cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
+      $cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
+      $cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de USD '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+      $cuento.='  **** USD. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** (al cambio oficial BCV) en calidad de prestamo. ';
+      $cuento.=' Para garantizar el pago de esta obligación doy en garantía los Ahorros que tengo en la institución' ;
+      $cuento.=' y de  no ser  suficiente  avalarán   los fiadores abajo firmantes, hasta por las cantidades especificadas. ';
+      $cuento.=' Dicho préstamo comenzará a ser descontado a partir del '.convertir_fechadmy3($prestamo['fecha_acta']);
+   }
+   else
+   {
+      $cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' mayor de edad, titular de la Cédula de Identidad: ';
+      $cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
+      $cuento.=' me dirijo a la Junta Directiva con el fin de solicitar la cantidad de USD '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+      $cuento.='  **** USD. ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')**** (al cambio oficial BCV) en calidad de prestamo. ';
+      $cuento.='De igual manera, en reunión de Junta Directiva según Acta N° ' . $prestamo['nro_acta'] . ' de fecha ' . convertir_fechadmy3($prestamo['fecha_acta']).' se acordó la aprobación del prestamo arriba indicado al socio ';
+      $cuento.= trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).', titular de la Cédula de Identidad: ';
+      $cuento.=$socio['ced_prof'].' identificado con el Código '.$socio['cod_prof'];
+      $cuento.=' por la cantidad de USD '.strtoupper(num2letras($prestamo['monpre_sdp']-$prestamo['inicial']));
+      $cuento.='  **** USD ('.trim(number_format($prestamo['monpre_sdp']-$prestamo['inicial'],2,".",",")).')****. (al cambio oficial BCV) ';
+      $cuento.='Dicha operacion será acreditada en la Cuenta ';
+      $cuento.='Nro. '.$socio['ctan_prof']. ' a partir de '.convertir_fechadmy3($prestamo['f_1cuo_sdp']);
+   }
 }
 $codigosocio=$socio['cod_prof'];
 $linea+=10;
@@ -220,10 +246,19 @@ $pdf->SetFont('Arial','',12);
 $linea+=5;
 $pdf->SetY($linea);
 $pdf->SetX($columna[0]);
-$cuento=trim($prestamo['descr_pres']). ' otorgado por la cantidad de Bs. '.number_format(($prestamo['monpre_sdp']-$prestamo['inicial']),2,".",",");
-$cuento.=' entre la forma en que se propone cancelar el préstamo ' . trim($prestamo['nrocuotas']) . ' cuotas de Bs. ';
-$cuento.=strtoupper(num2letras($prestamo['cuota'])); 
-$cuento.=' Bs. ('.number_format($prestamo['cuota'],2,".",",").') ';
+if ($prestamo['enUSD']==0) {
+   $cuento=trim($prestamo['descr_pres']). ' otorgado por la cantidad de Bs. '.number_format(($prestamo['monpre_sdp']-$prestamo['inicial']),2,".",",");
+   $cuento.=' entre la forma en que se propone cancelar el préstamo ' . trim($prestamo['nrocuotas']) . ' cuotas de Bs. ';
+   $cuento.=strtoupper(num2letras($prestamo['cuota'])); 
+   $cuento.=' Bs. ('.number_format($prestamo['cuota'],2,".",",").') ';
+}
+else 
+{
+   $cuento=trim($prestamo['descr_pres']). ' otorgado por la cantidad de USD. '.number_format(($prestamo['monpre_sdp']-$prestamo['inicial']),2,".",",");
+   $cuento.=' entre la forma en que se propone cancelar el préstamo ' . trim($prestamo['nrocuotas']) . ' cuotas de USD. ';
+   $cuento.=strtoupper(num2letras($prestamo['cuota'])); 
+   $cuento.=' Bs. ('.number_format($prestamo['cuota'],2,".",",").') y al momento del descuento se calcula a Tasa Oficial BCV ';
+}
 $cuento.=' *** LOS PRESTAMOS ESPECIALES NO TIENEN DERECHO A REINTEGRO *** ';
 $pdf->MultiCell(0,5,$cuento,0,'L'); 
 
@@ -291,11 +326,16 @@ if ($prestamo['pla_autor']==1) {
 
 	$cuento= '   Yo, '.trim($socio['ape_prof']). ' '.trim($socio['nombr_prof']).' titular de la Cédula de Identidad: ';
 	$cuento.=$socio['ced_prof'].' y Socio de esta institución identificado con el Código '.$socio['cod_prof'];
-  $cuento.=' de la Caja de Ahorro y Préstamo del Personal ';
-  $cuento.='Obrero de la Universidad Centroccidental "Lisandro Alvarado" (CAPPO-UCLA)';
-  $cuento.=', autorizo a la Administración de la Caja de Ahorro para que me sea descontado POR ';
-  $cuento.='UNA SOLA VEZ de la(s) nómina(s) correspondientes a PAGOS ESPECIALES, que cancela la ';
-  $cuento.='UCLA; por la cantidad de BOLIVARES ';
+   $cuento.=' de la Caja de Ahorro y Préstamo del Personal ';
+   $cuento.='Obrero de la Universidad Centroccidental "Lisandro Alvarado" (CAPPO-UCLA)';
+   $cuento.=', autorizo a la Administración de la Caja de Ahorro para que me sea descontado POR ';
+   // $cuento.='UNA SOLA VEZ de la(s) nómina(s) correspondientes a PAGOS ESPECIALES, que cancela la ';
+  // $cuento.='UCLA; por la cantidad de BOLIVARES ';
+   $cuento.='LA CANTIDAD DE CUOTAS ANTES INDICADAS de la(s) nómina(s) correspondientes a PAGOS ESPECIALES, que paga la ';
+   if ($prestamo['enUSD']==0)
+      $cuento.='UCLA; por la cantidad de BOLIVARES ';
+   else 
+      $cuento.='UCLA; por la cantidad de USD (a tasa Oficial BCV del momento del descuento) ';
   $cuento.=strtoupper(num2letras($prestamo['cuota'])); 
   $cuento.=' por concepto de '.trim($prestamo['descr_pres']);
 
@@ -329,6 +369,7 @@ if ($prestamo['pla_autor']==1) {
 */  
 }
 
+header('Content-Type: application/pdf');
 $pdf->Output();
 // $_SESSION['elasiento']='';
 $elasiento='';
