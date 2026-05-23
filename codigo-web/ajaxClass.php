@@ -12,7 +12,7 @@ class ajax {
 	var $cuota=0;
 	var $interes=0;
 
-	function cal2int($interes,$mcuotas,$mmonpre_sdp,$factor_divisible = 12,$z=0,$i2=0)
+	function cal2int($interes,$mcuotas,$mmonpre_sdp,$factor_divisible = 12,&$z=0,&$i2=0)
 	{
 		if ($interes > 0) {
 			$i = ((($interes / 100)) / $factor_divisible);
@@ -61,7 +61,7 @@ class ajax {
 	
 	function calint($monto, $interes, $mcuotas,$factor_divisible = 12)
 	{
-		$y=$this->cal2int($interes,$mcuotas,$monto,$factor_divisible,&$z,&$i2);
+		$y=$this->cal2int($interes,$mcuotas,$monto,$factor_divisible,$z,$i2);
 		echo '------------';
 		$k = $ia = $cu22 = $ac = $tc = $ta = 0;
 		$_c1 = $monto;

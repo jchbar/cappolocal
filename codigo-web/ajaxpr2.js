@@ -65,8 +65,30 @@ if (xmlhttp.readyState==4) {
 //	document.getElementById("cuota").value= xmlDoc.getElementsByTagName("cuota")[0].childNodes[0].nodeValue;
 	document.getElementById("cuota").value= xmlDoc.getElementsByTagName("cuota")[0].childNodes[0].nodeValue;
 	document.getElementById("interes_diferido").value=xmlDoc.getElementsByTagName("interes_diferido")[0].childNodes[0].nodeValue;
-	document.getElementById("montoneto").value=xmlDoc.getElementsByTagName("montoneto")[0].childNodes[0].nodeValue;
+    var montoneto = xmlDoc.getElementsByTagName("montoneto")[0].childNodes[0].nodeValue;
+	document.getElementById("montoneto").value=montoneto;
 	document.getElementById("gastosadministrativos").value=xmlDoc.getElementsByTagName("gastosadministrativos")[0].childNodes[0].nodeValue;
+    
+    var span_bs = document.getElementById("netobs_span");
+    var tasa_usd_input = document.getElementById("tasa_actual_usd");
+    if (span_bs && tasa_usd_input) {
+        var tasa_str = String(tasa_usd_input.value || "0").replace(",", ".");
+        var tasa = parseFloat(tasa_str);
+        
+        var neto_str = String(montoneto || "0").replace(",", ".");
+        var neto_float = parseFloat(neto_str); 
+        
+        if (!isNaN(tasa) && !isNaN(neto_float) && tasa > 0) {
+            var total_bs = tasa * neto_float;
+            var parts = total_bs.toFixed(2).split('.');
+            var formatted_bs = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + parts[1];
+            span_bs.innerHTML = "= " + formatted_bs + " Bs";
+            span_bs.style.color = "blue";
+        } else {
+            span_bs.innerHTML = "= 0,00 Bs (Verifique Tasa USD)";
+            span_bs.style.color = "red";
+        }
+    }
 	}
 }
 

@@ -9,7 +9,7 @@ if (!$link OR !$_SESSION['empresa']) {
 }
 $mostrarregresar=0;
 ?>
-<script src="ajaxpr2.js" type="text/javascript"></script>
+<script src="ajaxpr2.js?v=<?php echo time(); ?>" type="text/javascript"></script>
 <?
 if ($accion == 'Anadir') 
 	$onload="onload=\"foco('lacedula')\"";
@@ -26,6 +26,7 @@ else
 <?php
 $readonly=" readonly='readonly'";
 include("arriba.php");
+
 $menu61=1;include("menusizda.php");
 $cedula = $_GET['cedula'];
 $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -52,7 +53,7 @@ if ($accion == "Renovar") {	// seleccionar el tipo de prestamo nuevo de renovaci
 	$sql_310="select * from sgcaf310 where (cedsoc_sdp='$micedula') and (codpre_sdp='$elprestamo') and (stapre_sdp='A') and (! renovado)";
 	$a_310=mysql_query($sql_310);
 	if ((! $r_360['masdeuno']) and (mysql_num_rows($a_310) >= 1))	
-			echo '<h2>No puede tener mas de un préstamo de este tipo</h2>';
+			echo '<h2>No puede tener mas de un prï¿½stamo de este tipo</h2>';
 	else {
 		pantalla_completar_prestamo($cedula,$elprestamo);
 	}
@@ -76,7 +77,7 @@ if ($accion == "Renovacion") {	// selecciono el tipo de prestamo
 	$sql_310="select * from sgcaf310 where (cedsoc_sdp='$micedula') and (codpre_sdp='$elprestamo') and (stapre_sdp='A') and (! renovado)";
 	$a_310=mysql_query($sql_310);
 	if ((! $r_360['masdeuno']) and (mysql_num_rows($a_310) >= 1))	
-			echo '<h2>No puede tener mas de un préstamo de este tipo</h2>';
+			echo '<h2>No puede tener mas de un prï¿½stamo de este tipo</h2>';
 	else {
 		pantalla_completar_prestamo($cedula,$elprestamo);
 	}
@@ -134,7 +135,7 @@ if ($accion == 'Buscar')  {
 		while($row=mysql_fetch_assoc($rs)) {
 			echo "<tr>";
 
-		echo "<td class='centro'><a href='extractoctas3.php?cuenta=".trim($row['cuent_pres']).'-'.substr(trim($row['codsoc_sdp']),1,4)."&datos=no&'><img src='imagenes/page_wizard.gif' width='16' height='16' border='0' title='Mayor Analítico' alt='Mayor Analítico' /></a></td>";
+		echo "<td class='centro'><a href='extractoctas3.php?cuenta=".trim($row['cuent_pres']).'-'.substr(trim($row['codsoc_sdp']),1,4)."&datos=no&'><img src='imagenes/page_wizard.gif' width='16' height='16' border='0' title='Mayor Analï¿½tico' alt='Mayor Analï¿½tico' /></a></td>";
 		echo "<td class='centro'><a href='solpre.php?accion=Ver&cedula=".$cedula."&nropre=".$row['nropre_sdp']."'><img src='imagenes/page_user_dark.gif' width='16' height='16' border='0' title='Consultar' alt='Consultar'/></a></td>";
 		echo "<td class='centro'><a href='solpre.php?accion=ModificarCuota&cedula=".$cedula."&nropre=".$row['nropre_sdp']."'><img src='imagenes/modiftbl.jpg' width='16' height='16' border='0' title='Modificar Cuota' alt='Modificar Cuota'/></a></td>";
 		echo "<td class='centro'>";
@@ -239,7 +240,7 @@ if (($accion == "Editar") or ($accion=="Renovar")) {	// muestra datos para prest
 	pantalla_prestamo($result,$cedula);
 	echo "<input type = 'hidden' value ='".$cedula."' name='cedula'>";
 	$elstatus=$_SESSION['elstatus'];
-	echo '<fieldset><legend>Información Para Prestamo </legend>';
+	echo '<fieldset><legend>Informaciï¿½n Para Prestamo </legend>';
 	
 	/* revisar si esta suspendido */
 	$micedula=substr($cedula,0,4).'.'.substr($cedula,4,3).'.'.substr($cedula,7,4);
@@ -261,7 +262,7 @@ if (($accion == "Editar") or ($accion=="Renovar")) {	// muestra datos para prest
 		if (($elstatus == "ACTIVO") or ($elstatus == "JUBILA")) {
 			$sqlprestamos.="select * from sgcaf360 where ";}
 		else {
-			echo '<h2>El socio NO tiene un estatus disponible para solicitar préstamos</h2>';
+			echo '<h2>El socio NO tiene un estatus disponible para solicitar prï¿½stamos</h2>';
 			echo '</fieldset>';
 		}
 	}
@@ -271,7 +272,7 @@ if (($accion == "Editar") or ($accion=="Renovar")) {	// muestra datos para prest
 		// $sqlprestamos="select * from sgcaf360 where (retab_pres = 0) or (cod_pres='004') or (cod_pres='021') or (cod_pres='061') or (cod_pres='012') or (cod_pres='013') and ";
 		// $sqlprestamos="select * from sgcaf360 where (retab_pres = 0) or (cod_pres='004') or (cod_pres='021') or (cod_pres='061') or (cod_pres='012') or (cod_pres='013') and ";
 		$sqlprestamos.="select * from sgcaf360 where ";
-		echo '<h2>El socio NO tiene disponibilidad para solicitar préstamos<br>Sin embargo puede solicitar aquellos que <em>no afectan </em>disponibilidad</h2>';
+		echo '<h2>El socio NO tiene disponibilidad para solicitar prï¿½stamos<br>Sin embargo puede solicitar aquellos que <em>no afectan </em>disponibilidad</h2>';
 	}
 	$sqlprestamos.="(tiempo <= ".$_SESSION['tiempoactivo'];
 	//////////////////
@@ -375,7 +376,7 @@ if ($accion == "EscogePrestamo")  {	// selecciono el tipo de prestamo
 	$sql_310="select * from sgcaf310 where (cedsoc_sdp='$micedula') and (codpre_sdp='$elprestamo') and (stapre_sdp='A') and (! renovado)";
 	$a_310=mysql_query($sql_310);
 	if ((! $r_360['masdeuno']) and (mysql_num_rows($a_310) >= 1))	
-			echo '<h2>No puede tener mas de un préstamo de este tipo</h2>';
+			echo '<h2>No puede tener mas de un prï¿½stamo de este tipo</h2>';
 	else {
 		pantalla_completar_prestamo($cedula,$elprestamo);
 	}
@@ -389,6 +390,14 @@ if ($accion == "Solicitar") {	// aprobar
 	$a_360=mysql_query($sql_360);
 	$r_360=mysql_fetch_assoc($a_360);
 	if ($r_360['aprobar'] == 1) $estatus= 'A';
+	global $global_tasa_usd;
+	$global_tasa_usd = 1;
+	if ($r_360['enUSD'] == 1) {
+		$sql_tasa = "SELECT montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
+		$rs_tasa = mysql_query($sql_tasa);
+		$row_tasa = mysql_fetch_assoc($rs_tasa);
+		$global_tasa_usd = ($row_tasa['montobs'] > 0) ? $row_tasa['montobs'] : 1;
+	}
 	$cedula = $_POST['cedula'];
 	$elprestamo = $_POST['elprestamo'];
 	$elnumero = $_POST['elnumero'];
@@ -437,7 +446,7 @@ if ($accion == "Solicitar") {	// aprobar
 
 	/////////////////
 //	$primerdcto='0000-00-00';
-	echo "Creando préstamo nuevo numero <strong>$elnumero</strong><br>";
+	echo "Creando prï¿½stamo nuevo numero <strong>$elnumero</strong><br>";
 	$sql="insert into sgcaf310 (codsoc_sdp, cedsoc_sdp, nropre_sdp, codpre_sdp, f_soli_sdp, f_1cuo_sdp, monpre_sdp, monpag_sdp, nrofia_sdp, stapre_sdp, tipo_fianz, cuota, nrocuotas, interes_sd, cuota_ucla, netcheque, nro_acta, fecha_acta, ip, inicial, intereses, quien) values ('$laparte', '$micedula', '$elnumero','$elprestamo','$hoy', '$primerdcto', $monpre_sdp, 0, 0, '$estatus', '',$cuota, $lascuotas, $interes_sd, $cuota, $monpre_sdp, '$nroacta', '$fechaacta', '$ip', $inicial, $intereses_diferidos, '".$_SERVER['REMOTE_ADDR']."')";
 //	echo $sql;
 	$resultado=mysql_query($sql);	
@@ -478,13 +487,13 @@ if ($accion == "Solicitar") {	// aprobar
 	if ($r_360['genera_pl'] == 1) 
 		if ($r_360['nom_planilla'] == '') {
 			echo 'Preparando para la impresion<br>';
-			echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$cedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Préstamo </a>"; 	
+			echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$cedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Prï¿½stamo </a>"; 	
 		}
 		else {
-			echo 'Preparando para la impresion dinámica<br>';
+			echo 'Preparando para la impresion dinï¿½mica<br>';
 			echo "<a target=\"_blank\" href='";
 			echo $r_360['nom_planilla'];
-			echo "?cedula=$cedula' onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Préstamo </a>"; 	
+			echo "?cedula=$cedula' onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Prï¿½stamo </a>"; 	
 		}
 //		echo 'codigo'.$r_360['cod_prest'] ;
 		if (($r_360['cod_pres']=='055') or ($r_360['cod_pres']=='064') or ($r_360['cod_pres']=='066')or ($r_360['cod_pres']=='068')) // vivienda
@@ -497,7 +506,7 @@ if ($accion == "Solicitar") {	// aprobar
 			echo 'imp_girospdf.php';
 			echo "?cedula=$cedula' onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Giros</a>"; 	
 		}
-	else echo '<h2>Este tipo de préstamo esta configurado para no realizar impresión de planilla</h2>';
+	else echo '<h2>Este tipo de prï¿½stamo esta configurado para no realizar impresiï¿½n de planilla</h2>';
 
 	/// *****imprimri en otro momento, faltan los fiadores*****
 } // fin de ($accion == "Solicitar")
@@ -1085,6 +1094,14 @@ if ($accion == "Concretar") {	// hacer los asientos y actualizar el prestamo, fa
 //	echo $sql_310;
 	$a_310=mysql_query($sql_310);
 	$r_310=mysql_fetch_assoc($a_310);
+	global $global_tasa_usd;
+	$global_tasa_usd = 1;
+	if ($r_310['enUSD'] == 1) {
+		$sql_tasa = "SELECT montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
+		$rs_tasa = mysql_query($sql_tasa);
+		$row_tasa = mysql_fetch_assoc($rs_tasa);
+		$global_tasa_usd = ($row_tasa['montobs'] > 0) ? $row_tasa['montobs'] : 1;
+	}
 	$hoy = date("Y-m-d");
 	$b = $hoy;
 	$albanco=$r_310['monpre_sdp'];
@@ -1100,7 +1117,7 @@ if ($accion == "Concretar") {	// hacer los asientos y actualizar el prestamo, fa
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 
 		// cargo prestamo al socio
 		$laparte=$r_310['codsoc_sdp'];
@@ -1282,9 +1299,9 @@ if ($accion == "Concretar") {	// hacer los asientos y actualizar el prestamo, fa
 		else 
 			if ($r_310['genera_pl'] == 1) {
 				echo 'Preparando para la impresion<br>';
-				echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$cedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Préstamo </a>"; 
+				echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$cedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Prï¿½stamo </a>"; 
 			}
-		else echo '<h2>Este tipo de préstamo esta configurado para no realizar impresión de planilla</h2>';
+		else echo '<h2>Este tipo de prï¿½stamo esta configurado para no realizar impresiï¿½n de planilla</h2>';
 	}
 	/// *****imprimri en otro momento, faltan los fiadores*****	
 }	// ($accion == "Concretar")
@@ -1369,7 +1386,7 @@ function solicitar_fiadores($elnumero,$lacedula)
 //	echo $sql_320;
 	$a_320=mysql_query($sql_320);
 	echo "<table class='basica 100 hover' width='750'><tr>";
-	echo '<th colspan="1"></th><th width="80">Código</th><th width="80">Cédula</th><th width="200">Nombre</th><th width="280">Monto Fianza</th></tr>';
+	echo '<th colspan="1"></th><th width="80">Cï¿½digo</th><th width="80">Cï¿½dula</th><th width="200">Nombre</th><th width="280">Monto Fianza</th></tr>';
 	$registros=$total=0;
 	while($r_320=mysql_fetch_assoc($a_320)) {
 ////////////////////////////
@@ -1411,7 +1428,7 @@ function solicitar_fiadores($elnumero,$lacedula)
 	echo '</div>';	
 	if ($r_310['genera_pl'] == 1) {
 //		echo 'Preparando para la impresion<br>';
-		echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$lacedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Préstamo </a>"; 
+		echo "<a target=\"_blank\" href=\"solprepdf.php?cedula=$lacedula\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Planilla de Prï¿½stamo </a>"; 
 	}
 }
 
@@ -1482,7 +1499,8 @@ function pantalla_completar_prestamo($cedula,$tipo)
 	echo "<input type = 'hidden' value ='".$r_360['en_ajax']."' name='calculo' id='calculo'>";
 	echo "<input type = 'hidden' value ='".$elnumero."' name='elnumero' id='elnumero'>";
 	echo "<input type = 'hidden' value ='".$r_200['ced_prof']."' name='cedula' id='cedula'>";
-    echo '<td width="150">Monto Solicitado </td><td width="100" align="right">';
+    $label_moneda = ($r_360['enUSD'] == 1) ? ' USD' : ' Bs';
+    echo '<td width="150">Monto Solicitado' . $label_moneda . ' </td><td width="100" align="right">';
 	// -----------
 	$s_100="select ut from sgcaf100 limit 1";
 	$a_100=mysql_query($s_100);
@@ -1585,8 +1603,19 @@ function pantalla_completar_prestamo($cedula,$tipo)
 	echo '>';
 	echo '</td></tr><tr>';
 	echo '<td>Acta / Fecha </td><td>'.$nroacta.' del '.convertir_fechadmy($fechaacta).'</td>';
-	echo '<td>Neto a Depositar<br><em>No incluye otros prestamos</em></td><td align="right">';
+    $label_neto = ($r_360['enUSD'] == 1) ? ' USD' : ' Bs';
+	echo '<td>Neto a Depositar ' . $label_neto . '<br><em>No incluye otros prestamos</em></td><td align="right">';
 	echo '<input align="right" name="montoneto" type="text" id="montoneto" size="12" maxlength="12" readonly="readonly" value ="0.00"';
+    if ($r_360['enUSD'] == 1) {
+        $sql_tasa = "SELECT montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
+        $rs_tasa = mysql_query($sql_tasa);
+        $row_tasa = mysql_fetch_assoc($rs_tasa);
+        $tasa_actual = $row_tasa['montobs'] ? $row_tasa['montobs'] : 0;
+        echo '><br><span id="netobs_span" style="color:blue; font-weight:bold;">= TASA (' . number_format($tasa_actual, 2, ',', '.') . ') Bs</span>';
+        echo "<input type='hidden' id='tasa_actual_usd' value='" . $tasa_actual . "'>";
+    } else {
+        echo '>';
+    }
 	echo '</td></tr><tr>';
 //	echo '<tr><td align="center" colspan="4">';
 
@@ -1598,7 +1627,7 @@ function pantalla_completar_prestamo($cedula,$tipo)
 	echo '<td align="center" colspan="2"> '; 
 	echo '<input type="button" name="calculo" value="Calcular Cuota" onClick="ajax_call()">	';
 	echo '</td><td align="center" colspan="2"> ';
-	echo "<input type = 'submit' value = 'Crear Préstamo'>"; 
+	echo "<input type = 'submit' value = 'Crear Prï¿½stamo'>"; 
 
 	// <a title="Calcular" href="javascript:Cargarcontenido('mostrarpr.php', 'c=3', 'form1', 'contenido2')">Calcular</a>
 	echo '</td>';} 
@@ -1631,11 +1660,11 @@ function pantalla_prestamo($result,$cedula)
 	$lectura = 'readonly = "readonly"'; $activada="disabled" ; 
 //	<form id="form1" name="form1" method="post" action="">
 ?>
-  <label><fieldset><legend>Información Personal </legend>
+  <label><fieldset><legend>Informaciï¿½n Personal </legend>
   <table width="639" border="1">
     <tr>
 		<td colspan="1" width="100" >C&oacute;digo <?php echo '<strong>'.$elcodigo.'</strong>'; ?></td>
- 		<td colspan="1" width="130">Cédula <?php echo '<strong>'.$fila['ced_prof'].'</strong>';?></td>
+ 		<td colspan="1" width="130">Cï¿½dula <?php echo '<strong>'.$fila['ced_prof'].'</strong>';?></td>
 		<td colspan="3" width="127">Socio <?php echo '<strong>'.$fila['ape_prof'].' '.$fila['nombr_prof'] .'</strong>'?></td>
 	</tr>
 	<tr>
@@ -1682,7 +1711,7 @@ function pantalla_prestamo($result,$cedula)
 		 ?></strong></td>
 	</tr>
 </table>
-</fieldset> 
+</fieldset>ï¿½
 
 <?php
 if (strtoupper($fila['statu_prof']) == 'RETIRA')
@@ -1752,7 +1781,7 @@ function generar_comprobantes($sql_360)
 		$listo=cuenta_810($cargo,trim($r_200['ape_prof']). ' '.$r_200['nombr_prof']);
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '','',0,0,0,0,0,0,0,'')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio

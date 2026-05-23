@@ -10,7 +10,7 @@ if (($r_360['cod_pres'] == '059')) {	// zapatos //
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio
@@ -93,7 +93,7 @@ if (($r_360['cod_pres'] == '060')) {	// celulares 2
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		$d_obligatorias=0;
@@ -188,7 +188,7 @@ if (($r_360['cod_pres'] == '060')) {	// celulares 2
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio
@@ -387,7 +387,7 @@ if (($r_360['cod_pres'] == '060')) {	// celulares 2
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio
@@ -510,7 +510,7 @@ if (($r_360['cod_pres'] == '060')) {	// celulares 2
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio
@@ -654,7 +654,7 @@ if (($r_360['cod_pres'] == '023') or ($r_360['cod_pres'] == '053') or ($r_360['c
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio
@@ -733,7 +733,7 @@ if (($r_360['cod_pres'] == '023') or ($r_360['cod_pres'] == '053') or ($r_360['c
 		echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$elasiento'>$elasiento </a></strong> <br>";
 		$desc='Prestamo Otorgado al socio '.$r_200['ape_prof']. ' '.$r_200['nombr_prof'];
 		$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$elasiento', '$b', '$desc','',0,0,0,0,0,0,0,'$desc')"; 
-		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+		if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 		$haber = $debe = 0;
 		$referencia=$elnumero;
 		// cargo prestamo al socio

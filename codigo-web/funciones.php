@@ -1,7 +1,7 @@
 <?php
 
-//Copyright (C) 2000-2006  Antonio Grandío Botella http://www.antoniograndio.com
-//Copyright (C) 2000-2006  Inmaculada Echarri San Adrián http://www.inmaecharri.com
+//Copyright (C) 2000-2006  Antonio Grandï¿½o Botella http://www.antoniograndio.com
+//Copyright (C) 2000-2006  Inmaculada Echarri San Adriï¿½n http://www.inmaecharri.com
 
 //This file is part of Catwin.
 
@@ -20,7 +20,7 @@
 //along with Catwin Net; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-/* *** COMPROBACIÓN AÑO ****************************** */
+/* *** COMPROBACIï¿½N Aï¿½O ****************************** */
 
 function anocont($fecha) {
 
@@ -43,7 +43,7 @@ echo "<tr>";
 
 if ($edborr) {echo "<th width='200' colspan=2></th>";}
 
-echo '<th width="100">Cuenta</th><th width="200">Descripción</th><th width="200">Concepto</th><th width="50">Referencia</th><th width="100">Debe</th><th width="100">Haber</th></tr>';
+echo '<th width="100">Cuenta</th><th width="200">Descripciï¿½n</th><th width="200">Concepto</th><th width="50">Referencia</th><th width="100">Debe</th><th width="100">Haber</th></tr>';
 // <th width="100">Descuadre</th></tr>';
 
 }
@@ -62,7 +62,7 @@ $result = mysql_query("SELECT enc_clave, enc_fecha, sumadebe, sumahaber FROM asi
 
 if (@mysql_num_rows($result) == 0) {
 
-	echo $mensaje."<p />Asiento <span class='b'>$asiento</span> inexistente o Apunte Huérfano.";
+	echo $mensaje."<p />Asiento <span class='b'>$asiento</span> inexistente o Apunte Huï¿½rfano.";
 	return;
 
 }
@@ -94,7 +94,7 @@ if (strlen($asi["enc_soporte"]) > 0)
 {echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='imagen.php?asiento=$asiento' target='_blank'>Ver Soporte</a>&nbsp;&nbsp;&nbsp;<a href='editasi2.php?asiento=$asiento&bojust=$asiento' onclick='return borrar_justificante()'>Borrar Soporte</a>";}
 
 if (trim($fichero[1])) {
-	echo "&nbsp;&nbsp;&nbsp;<a onclick=\"amplred('div$asiento')\">Explicación (ver/ocultar)</a>";
+	echo "&nbsp;&nbsp;&nbsp;<a onclick=\"amplred('div$asiento')\">Explicaciï¿½n (ver/ocultar)</a>";
 	echo "<div id='div$asiento' style='display:none'>".$fichero[1]."</div>";
 }
 // echo "<a href='javascript:print()'>  Imprimir</a>";
@@ -131,7 +131,7 @@ while ($fila = mysql_fetch_array($result)) {
 //	$sqlcuenta="call sp_qry_cuenta('".$fila["com_cuenta"]."')";
 	$sqlcuenta="SELECT cue_nombre FROM sgcaf810 where cue_codigo = '".$fila["com_cuenta"]."'";
 // 	echo $sqlcuenta;
-	$rs=mysql_query($sqlcuenta) or die ("<p />Estimado usuario $usuario contacte al administrador Código 810-1");
+	$rs=mysql_query($sqlcuenta) or die ("<p />Estimado usuario $usuario contacte al administrador Cï¿½digo 810-1");
 	$filacuenta = mysql_fetch_array($rs);
 	echo "<td width='200'>".$filacuenta["cue_nombre"]."</td>";
 	
@@ -254,10 +254,10 @@ else $minimo=mysql_num_rows($rs);
   
   if ($tot > 0)
   {
-  $result = mysql_query("UPDATE subcuent SET saldod = '$tot', saldoa = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE subcuent SET saldod = '$tot', saldoa = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   } else {
   
-  $result = mysql_query("UPDATE subcuent SET saldoa = 0 - '$tot', saldod = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE subcuent SET saldoa = 0 - '$tot', saldod = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   
   }
   
@@ -284,10 +284,10 @@ else $minimo=mysql_num_rows($rs);
   
   if ($tot > 0)
   {
-  $result = mysql_query("UPDATE cuentas SET sdo3cd = '$tot', sdo3ca = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE cuentas SET sdo3cd = '$tot', sdo3ca = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   } else {
   
-  $result = mysql_query("UPDATE cuentas SET sdo3ca = 0 - '$tot', sdo3cd = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."'  WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE cuentas SET sdo3ca = 0 - '$tot', sdo3cd = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."'  WHERE cuenta =".$fila['cuenta']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   
   }
   
@@ -314,10 +314,10 @@ else $minimo=mysql_num_rows($rs);
   
   if ($tot > 0)
   {
-  $result = mysql_query("UPDATE subgrupo SET sdod2c = '$tot', sdoh2c = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE subgrupo =".$fila['subgrupo']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE subgrupo SET sdod2c = '$tot', sdoh2c = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."' WHERE subgrupo =".$fila['subgrupo']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   } else {
   
-  $result = mysql_query("UPDATE subgrupo SET sdoh2c = 0 - '$tot', sdod2c = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."'  WHERE subgrupo =".$fila['subgrupo']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobación."); 
+  $result = mysql_query("UPDATE subgrupo SET sdoh2c = 0 - '$tot', sdod2c = 0, sdebe = '".$sum['tot_debe']."', shaber = '".$sum['tot_haber']."'  WHERE subgrupo =".$fila['subgrupo']) or die ("El usuario $usuario no tiene permisos para hacer Balances de Comprobaciï¿½n."); 
   
   }
   
@@ -339,10 +339,10 @@ $nmes = date('n');
 
 $semana['1'] = "Lunes";
 $semana['2'] = "Martes";
-$semana['3'] = "Miércoles";
+$semana['3'] = "Miï¿½rcoles";
 $semana['4'] = "Jueves";
 $semana['5'] = "Viernes";
-$semana['6'] = "Sábado";
+$semana['6'] = "Sï¿½bado";
 $semana['7'] = "Domingo";
 
 $mes[1] = "Enero";
@@ -492,7 +492,7 @@ function procese($elmes,$niveles)
 */
 		$cuantos++;
 		$porcentaje = $cuantos * 100 / $ValorTotal; //saco mi valor en porcentaje
-		echo "<script>callprogress(".round($porcentaje).")</script>"; //llamo a la función JS(JavaScript) para actualizar el progreso
+		echo "<script>callprogress(".round($porcentaje).")</script>"; //llamo a la funciï¿½n JS(JavaScript) para actualizar el progreso
 //		echo $porcentaje.'<br>';
 		flush(); //con esta funcion hago que se muestre el resultado de inmediato y no espere a terminar todo el bucle con los 25 registros para recien mostrar el resultado
 		ob_flush();
@@ -611,6 +611,10 @@ function cuenta_810($codigo, $nombre)
 
 function agregar_f820 ($pcom_nrocom, $pcom_fecha, $pcom_debcre, $pcom_cuenta, $pcom_descri, $elmonto, $pcom_monto2, $pcom_monto, $pcom_ip, $pcom_nroite, $pcom_refere, $pcom_tipmov, $agregar, $registro)
 {
+	global $global_tasa_usd;
+	if (isset($global_tasa_usd) && $global_tasa_usd > 0) {
+		$elmonto = $elmonto * $global_tasa_usd;
+	}
 	$pcom_monto1 = $pcom_monto2 = 0;
 	if (($pcom_debcre =='+') or ($pcom_debcre == '1') or ($pcom_debcre == on)) 
 		{ $pcom_monto1=$elmonto; $pcom_debcre = '+';}
@@ -629,18 +633,18 @@ com_nrocom, com_fecha, com_debcre, com_cuenta, com_descri, com_monto1, com_monto
 			$elsql="DELETE FROM sgcaf820 WHERE nro_registro = $registro";
 			}
 //	echo $elsql.'<br>';
-	$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Código 820-1- <br>".mysql_error()."<br>".$elsql);
+	$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Cï¿½digo 820-1- <br>".mysql_error()."<br>".$elsql);
 // $final = explode(" ", microtime());
 // $tiempo = ($final[1] + $final[0]) - ($comienzo[1] - $comienzo[0]); 
 // echo "comando ejecutado en $tiempo segundos";
 	
 	$elsql="SELECT SUM(com_monto1) as debe, SUM(com_monto2) AS haber, COUNT(com_nrocom) as items FROM sgcaf820 WHERE com_nrocom='$pcom_nrocom'";
-	$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Código 830-1");
+	$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Cï¿½digo 830-1");
 	$fila = mysql_fetch_assoc($rs);
 	if (mysql_num_rows($rs) > 0) {
 		$elsql="UPDATE sgcaf830 SET enc_debe='$fila[debe]', enc_haber='$fila[haber]', enc_item='$fila[items]',enc_fecha='$pcom_fecha' WHERE enc_clave = '$pcom_nrocom'";
 // 		echo $elsql;
-		$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Código 830-2<br>".$sql);
+		$rs=(mysql_query($elsql)) or die ("<p />Estimado usuario $usuario contacte al administrador Cï¿½digo 830-2<br>".$sql);
 	}
 	// actualizar los niveles en la 810
 	$losniveles = mysql_query("SELECT * FROM sgcafniv order by con_nivel"); 
@@ -802,7 +806,7 @@ function cedad($fncido)
           $edad = $fdhoy[2] - $fpncido[2];
      }
 
-     return $edad . ' años ';
+     return $edad . ' aï¿½os ';
 }
 
 function dias_pasados($fechai, $fechaf)
@@ -822,11 +826,11 @@ function dias_pasados($fechai, $fechaf)
 	//resto a una fecha la otra
 	$segundos_diferencia = $timestamp1 - $timestamp2;
 	//echo $segundos_diferencia;
-	//convierto segundos en días
+	//convierto segundos en dï¿½as
 	$dias_diferencia = $segundos_diferencia / (60 * 60 * 24); 
-	//obtengo el valor absoulto de los días (quito el posible signo negativo)
+	//obtengo el valor absoulto de los dï¿½as (quito el posible signo negativo)
 	$dias_diferencia = abs($dias_diferencia);
-	//quito los decimales a los días de diferencia
+	//quito los decimales a los dï¿½as de diferencia
 	$dias_diferencia = floor($dias_diferencia); 
 	return $dias_diferencia;
 }
@@ -1007,10 +1011,10 @@ function num2letras($num, $fem = true, $dec = true) {
 function suma_fechas($fecha,$ndias)
 {
 if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
-list($dia,$mes,$año)=split("/", $fecha);
+list($dia,$mes,$aï¿½o)=split("/", $fecha);
 if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha))
-list($dia,$mes,$año)=split("-",$fecha);
-$nueva = mktime(0,0,0, $mes,$dia,$año) + $ndias * 24 * 60 * 60;
+list($dia,$mes,$aï¿½o)=split("-",$fecha);
+$nueva = mktime(0,0,0, $mes,$dia,$aï¿½o) + $ndias * 24 * 60 * 60;
 $nuevafecha=date("d/m/Y",$nueva);
 return ($nuevafecha);
 }
@@ -1018,10 +1022,10 @@ return ($nuevafecha);
 function restar_fechas($fecha,$ndias)
 {
 if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
-list($dia,$mes,$año)=split("/", $fecha);
+list($dia,$mes,$aï¿½o)=split("/", $fecha);
 if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha))
-list($dia,$mes,$año)=split("-",$fecha);
-$nueva = mktime(0,0,0, $mes,$dia,$año) - $ndias * 24 * 60 * 60;
+list($dia,$mes,$aï¿½o)=split("-",$fecha);
+$nueva = mktime(0,0,0, $mes,$dia,$aï¿½o) - $ndias * 24 * 60 * 60;
 $nuevafecha=date("d/m/Y",$nueva);
 return ($nuevafecha);
 }
@@ -1117,7 +1121,7 @@ echo "<tr>";
 
 //if ($edborr) {echo "<th width='200' colspan=0></th>";}
 
-echo '<th width="100">Cuenta</th><th width="200">Descripción</th><th width="200">Concepto</th><th width="50">Referencia</th><th width="100">Debe</th><th width="100">Haber</th></tr>';
+echo '<th width="100">Cuenta</th><th width="200">Descripciï¿½n</th><th width="200">Concepto</th><th width="50">Referencia</th><th width="100">Debe</th><th width="100">Haber</th></tr>';
 // <th width="100">Descuadre</th></tr>';
 
 }
@@ -1144,7 +1148,7 @@ echo "</b>";
 
 /*
 if (trim($fichero[1])) {
-	echo "&nbsp;&nbsp;&nbsp;<a onclick=\"amplred('div$asiento')\">Explicación (ver/ocultar)</a>";
+	echo "&nbsp;&nbsp;&nbsp;<a onclick=\"amplred('div$asiento')\">Explicaciï¿½n (ver/ocultar)</a>";
 	echo "<div id='div$asiento' style='display:none'>".$fichero[1]."</div>";
 }
 */
@@ -1172,7 +1176,7 @@ while ($fila = mysql_fetch_array($result)) {
 	echo "<td width='100'>".$fila["com_cuenta"]."</a></td>";
 	
 	$sqlcuenta="SELECT cue_nombre FROM histf810 where cue_codigo = '".$fila["com_cuenta"]."'"; // revisar
-	$rs=mysql_query($sqlcuenta) or die ("<p />Estimado usuario $usuario contacte al administrador Código 810-1");
+	$rs=mysql_query($sqlcuenta) or die ("<p />Estimado usuario $usuario contacte al administrador Cï¿½digo 810-1");
 	$filacuenta = mysql_fetch_array($rs);
 	echo "<td width='200'>".$filacuenta["cue_nombre"]."</td>";
 	echo "<td width='200'>".$fila["com_descri"]."</td>";

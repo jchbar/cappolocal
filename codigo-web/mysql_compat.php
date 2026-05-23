@@ -170,3 +170,22 @@ if (!function_exists('mysql_close')) {
         return mysqli_close($conn);
     }
 }
+
+
+if (!function_exists('mysql_data_seek')) {
+
+    function mysql_data_seek($result, $row_number)
+    {
+        if (!$result instanceof mysqli_result) {
+
+            die(
+                'mysql_data_seek(): resultado inválido'
+            );
+        }
+
+        return mysqli_data_seek(
+            $result,
+            $row_number
+        );
+    }
+}

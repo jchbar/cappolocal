@@ -76,7 +76,7 @@ echo "</resultados>";
 	
 
 
-	function cal2int($interes,$mcuotas,$mmonpre_sdp,$factor_divisible = 12,$z=0,$i2=0)
+	function cal2int($interes,$mcuotas,$mmonpre_sdp,$factor_divisible = 12,&$z=0,&$i2=0)
 	{
 		if ($interes > 0) {
 			$i = ((($interes / 100)) / $factor_divisible);
@@ -129,7 +129,7 @@ echo "</resultados>";
 	
 	function calint($monto, $interes, $mcuotas,$factor_divisible = 12,$cuota2=0)
 	{
-		$y=cal2int($interes,$mcuotas,$monto,$factor_divisible,&$z,&$i2);
+		$y=cal2int($interes,$mcuotas,$monto,$factor_divisible,$z,$i2);
 		if ($cuota2 != 0) $z=$cuota2;
 //		echo $z.'------------'. $i2.'<br>';
 		$k = $ia = $cu22 = $ac = $tc = $ta = 0;
