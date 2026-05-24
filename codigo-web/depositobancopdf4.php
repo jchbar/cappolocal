@@ -19,7 +19,7 @@ if (!$link OR !$_SESSION['empresa']) {
 	exit;
 }
 	*/ 
-// $link = @mysql_connect("localhost","root", "",'',65536) or die ("<p /><br /><p /><div style='text-align:center'>En estos momentos no hay conexión con el servidor, inténtalo más tarde.</div>");
+// $link = @mysql_connect("localhost","root", "",'',65536) or die ("<p /><br /><p /><div style='text-align:center'>En estos momentos no hay conexiï¿½n con el servidor, intï¿½ntalo mï¿½s tarde.</div>");
 // mysql_select_db($_POST['sica'], $link);
 session_start();
 // include("fpdf/a_cookies.php");
@@ -36,7 +36,8 @@ if (!$link OR !$_SESSION['empresa']) {
 require('fpdf/mysql_table.php');
 include("fpdf/comunes.php");
 require('funciones.php');
-$sql_360="select * from sgcaf360 where (dcto_sem) order by cod_pres"; //  limit 30"; //  limit 20";
+// $sql_360="select * from sgcaf360 where (dcto_sem) order by cod_pres"; //  limit 30"; //  limit 20";
+$sql_360=$_SESSION['albanco'];
 $a_360=mysql_query($sql_360);
 $columna=3;
 $rpl=300; 	// registros por listado
@@ -45,24 +46,26 @@ $col_listado=0;
 $nuevoarchivo=false;
 $condicion_sql='select codigo, cedula, nombre, nrocta, ';
 $col_listado=0;
-// $arrtitulo="'Lin.Nº','Código','Cédula','Apellidos y Nombres',";
-$header[0]='Lin N°';
+// $arrtitulo="'Lin.Nï¿½','Cï¿½digo','Cï¿½dula','Apellidos y Nombres',";
+$header[0]='Lin Nï¿½';
 $header[1]='Codigo';
 $header[2]='Cedula';
 $header[3]='Apellidos y Nombres';
 $header[4]='Nro Cuenta';
 $max_cols=mysql_num_rows($a_360);
+$es_usd = array();
 while ($r360 = mysql_fetch_assoc($a_360))
 {
 	$col_listado++;
 	$columna++;
+	$es_usd[$col_listado] = $r360['enUSD'];
 //	if (($col_listado >= 1) and ($col_listado <= $max_cols)){
 //		$arrtitulo.=$r360['desc_cor'];
 	if (trim($r360['desc_cor'])!='') ;// $header[$columna]=$r360['desc_cor'] ;
 	else ; // $header[$columna]=substr($r360['descr_pres'],0,12);
 	$totales[$col_listado]=0;
 	$campo='colpre'.$col_listado;
-	$condicion_sql.=' colpre'.$col_listado;
+	$condicion_sql.=' colpre'.$col_listado.', colnro'.$col_listado;
 	if ($col_listado != $max_cols) {
 		$arrtitulo.=', ';
 		$condicion_sql.=', ';
@@ -92,10 +95,15 @@ set_time_limit($registros);
 $lascolumnas=mysql_num_fields($a_nopr)-4;
 while ($r_nopr = mysql_fetch_assoc($a_nopr)){
 	$t1=0;
-	for ($prestamos=1;$prestamos<=$lascolumnas;$prestamos++) {		// sumatoria de los prestamos
+	for ($prestamos=1;$prestamos<=$max_cols;$prestamos++) {		// sumatoria de los prestamos
 		$item='colpre'.$prestamos;
-		$t1+=$r_nopr[$item];
-		$totales[$prestamos]+=$r_nopr[$item];
+		$nroitem='colnro'.$prestamos;
+		$monto_actual = $r_nopr[$item];
+		if ($es_usd[$prestamos] == 1) {
+			$monto_actual = convertir_monto_usd_bs($monto_actual, $r_nopr[$nroitem], $r_nopr['cedula']);
+		}
+		$t1+=$monto_actual;
+		$totales[$prestamos]+=$monto_actual;
 	}
 	if ($t1 > 0) {
 	$linea+=$salto;
@@ -125,7 +133,7 @@ while ($r_nopr = mysql_fetch_assoc($a_nopr)){
 	}
 }
 $general=0;
-for ($i=1;$i<count($totales);$i++)
+for ($i=1;$i<=count($totales);$i++)
 	if ($totales[$i]!=0) {
 		$general+=$totales[$i];
 /*
@@ -144,6 +152,7 @@ $pdf->Cell($w[4],$alto,'Total General',0,0,'L',1);
 $pdf->SetX($p[5]);
 $pdf->Cell($w[5],$alto,number_format($general,2,".",","),0,0,'R',1);
 $pdf->SetFont('Arial','',7);
+header('Content-Type: application/pdf');
 $pdf->Output();
 set_time_limit(30);
 
@@ -154,17 +163,17 @@ $pdf->AddPage();
 $linea=25;
 $pdf->SetY($linea);
 $pdf->SetX(0);
-$pdf->MultiCell(0,0,"Descuento de Préstamos (Banco) al ".convertir_fechadmy($fechadescuento),0,C,0);
+$pdf->MultiCell(0,0,"Descuento de Prï¿½stamos (Banco) al ".convertir_fechadmy($fechadescuento),0,C,0);
 $pdf->SetY($linea);
 $pdf->SetFont('Arial','',7);
 $linea+=5;
 $pdf->SetX(170);
 $pdf->Cell(20,0,'Realizado el '.date('d/m/Y h:i A'),0,0,'L'); 
-//Títulos de las columnas
+//Tï¿½tulos de las columnas
 $linea+=5;
 $pdf->SetY($linea);
 //$header=array($$arrtitulo);
-//Colores, ancho de línea y fuente en negrita
+//Colores, ancho de lï¿½nea y fuente en negrita
 $pdf->SetFillColor(200,200,200);
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0,0,0);
@@ -176,7 +185,7 @@ for($i=0;$i<6;$i++){
 	$pdf->SetX($p[$i]);
 	$pdf->Cell($w[$i],$alto,$header[$i],1,0,'C',1);
 }
-//Restauración de colores y fuentes
+//Restauraciï¿½n de colores y fuentes
 $pdf->SetFillColor(224,235,255);
 $pdf->SetTextColor(0);
 $pdf->SetFont('Arial','',10);

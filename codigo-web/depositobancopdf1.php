@@ -19,7 +19,7 @@ if (!$link OR !$_SESSION['empresa']) {
 	exit;
 }
 	*/ 
-// $link = @mysql_connect("localhost","root", "",'',65536) or die ("<p /><br /><p /><div style='text-align:center'>En estos momentos no hay conexión con el servidor, inténtalo más tarde.</div>");
+// $link = @mysql_connect("localhost","root", "",'',65536) or die ("<p /><br /><p /><div style='text-align:center'>En estos momentos no hay conexiï¿½n con el servidor, intï¿½ntalo mï¿½s tarde.</div>");
 // mysql_select_db($_POST['sica'], $link);
 session_start();
 // include("fpdf/a_cookies.php");
@@ -47,23 +47,25 @@ $col_listado=0;
 $nuevoarchivo=false;
 $condicion_sql='select codigo, cedula, nombre, ';
 $col_listado=0;
-// $arrtitulo="'Lin.Nº','Código','Cédula','Apellidos y Nombres',";
-$header[0]='Lin N°';
+// $arrtitulo="'Lin.Nï¿½','Cï¿½digo','Cï¿½dula','Apellidos y Nombres',";
+$header[0]='Lin Nï¿½';
 $header[1]='Codigo';
 $header[2]='Cedula';
 $header[3]='Apellidos y Nombres';
 $max_cols=mysql_num_rows($a_360);
+$es_usd = array();
 while ($r360 = mysql_fetch_assoc($a_360))
 {
 	$col_listado++;
 	$columna++;
+	$es_usd[$col_listado] = $r360['enUSD'];
 //	if (($col_listado >= 1) and ($col_listado <= $max_cols)){
 //		$arrtitulo.=$r360['desc_cor'];
 	if (trim($r360['desc_cor'])!='') $header[$columna]=$r360['desc_cor'] ;
 	else $header[$columna]=substr($r360['descr_pres'],0,12);
 	$totales[$col_listado]=0;
 	$campo='colpre'.$col_listado;
-	$condicion_sql.=' colpre'.$col_listado;
+	$condicion_sql.=' colpre'.$col_listado.', colnro'.$col_listado;
 	if ($col_listado != $max_cols) {
 		$arrtitulo.=', ';
 		$condicion_sql.=', ';
@@ -107,17 +109,22 @@ while ($r_nopr = mysql_fetch_assoc($a_nopr)){
 	$pdf->Cell($w[3],$alto,$r_nopr["nombre"],0,0,'LRTB');
 	$posicion=3;
 	$t1=0;
-	for ($prestamos=1;$prestamos<=$lascolumnas;$prestamos++) {
+	for ($prestamos=1;$prestamos<=$max_cols;$prestamos++) {
 		$posicion++;
 		$pdf->SetY($linea);
 		$pdf->SetX($p[$posicion]);
 //		$item='$r_nopr["colpre'.$prestamos.'"]';
 		$item='colpre'.$prestamos;
+		$nroitem='colnro'.$prestamos;
 //		echo $r_nopr[$oitem];
 //		$eitem=$$item;
-		$t1+=$r_nopr[$item];
-		$totales[$prestamos]+=$r_nopr[$item];
-		$pdf->Cell($w[4],$alto,number_format($r_nopr[$item],2,".",","),0,0,'R',0);
+		$monto_actual = $r_nopr[$item];
+		if ($es_usd[$prestamos] == 1) {
+			$monto_actual = convertir_monto_usd_bs($monto_actual, $r_nopr[$nroitem], $r_nopr['cedula']);
+		}
+		$t1+=$monto_actual;
+		$totales[$prestamos]+=$monto_actual;
+		$pdf->Cell($w[4],$alto,number_format($monto_actual,2,".",","),0,0,'R',0);
 		if ($posicion > 8) {
 			$posicion=3;
 			$linea+=$salto;
@@ -177,6 +184,7 @@ $pdf->SetX(10);
 $pdf->Cell(20,$alto,'Total General',0,0,'R',1);
 $pdf->SetX(40);
 $pdf->Cell(20,$alto,number_format($general,2,".",","),0,0,'R',1);
+header('Content-Type: application/pdf');
 $pdf->Output();
 set_time_limit(30);
 
@@ -187,17 +195,17 @@ $pdf->AddPage();
 $linea=25;
 $pdf->SetY($linea);
 $pdf->SetX(0);
-$pdf->MultiCell(0,0,"Deposito de Préstamos al ".convertir_fechadmy($fechadescuento),0,C,0);
+$pdf->MultiCell(0,0,"Deposito de Prï¿½stamos al ".convertir_fechadmy($fechadescuento),0,C,0);
 $pdf->SetY($linea);
 $pdf->SetFont('Arial','',7);
 $linea+=5;
 $pdf->SetX(240);
 $pdf->Cell(20,0,'Realizado el '.date('d/m/Y h:i A'),0,0,'C'); 
-//Títulos de las columnas
+//Tï¿½tulos de las columnas
 $linea+=5;
 $pdf->SetY($linea);
 //$header=array($$arrtitulo);
-//Colores, ancho de línea y fuente en negrita
+//Colores, ancho de lï¿½nea y fuente en negrita
 $pdf->SetFillColor(200,200,200);
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0,0,0);
@@ -227,7 +235,7 @@ $pdf->Cell($w[10],$alto+2,$header[$i],1,0,'C',1);
 
 //	$pdf->Cell($w[$i],7,$header[$i],1,0,'C',1);
 // $pdf->Ln();
-//Restauración de colores y fuentes
+//Restauraciï¿½n de colores y fuentes
 $pdf->SetFillColor(224,235,255);
 $pdf->SetTextColor(0);
 $pdf->SetFont('Arial','',7);

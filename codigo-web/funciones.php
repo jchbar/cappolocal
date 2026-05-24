@@ -1272,5 +1272,23 @@ echo 'este es el '.$elnumero;
 	$elnumero=$lnumero;
 	// fin de generar nuevo numero
 	return $elnumero;
-}
-?>
+	}
+
+	function convertir_monto_usd_bs($monto, $nropre, $cedula) {
+	$sql = "SELECT idtasa FROM sgcaf310 WHERE nropre_sdp = '$nropre' AND cedsoc_sdp = '$cedula' LIMIT 1";
+	$res = mysql_query($sql);
+	if ($res && mysql_num_rows($res) > 0) {
+	$row = mysql_fetch_assoc($res);
+	$idtasa = $row['idtasa'];
+	if ($idtasa > 0) {
+	$sql_tasa = "SELECT montobs FROM sgcatasa WHERE id = '$idtasa' LIMIT 1";
+	$res_tasa = mysql_query($sql_tasa);
+	if ($res_tasa && mysql_num_rows($res_tasa) > 0) {
+	$row_tasa = mysql_fetch_assoc($res_tasa);
+	return $monto * $row_tasa['montobs'];
+	}
+	}
+	}
+	return $monto;
+	}
+	?>

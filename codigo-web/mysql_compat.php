@@ -189,3 +189,19 @@ if (!function_exists('mysql_data_seek')) {
         );
     }
 }
+
+
+if (!function_exists('mysql_num_fields')) {
+
+    function mysql_num_fields($result)
+    {
+        if (!$result instanceof mysqli_result) {
+
+            die(
+                'mysql_num_fields(): resultado inválido'
+            );
+        }
+
+        return mysqli_num_fields($result);
+    }
+}

@@ -392,11 +392,13 @@ if ($accion == "Solicitar") {	// aprobar
 	if ($r_360['aprobar'] == 1) $estatus= 'A';
 	global $global_tasa_usd;
 	$global_tasa_usd = 1;
+	$id_tasa = 0;
 	if ($r_360['enUSD'] == 1) {
-		$sql_tasa = "SELECT montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
+		$sql_tasa = "SELECT id, montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
 		$rs_tasa = mysql_query($sql_tasa);
 		$row_tasa = mysql_fetch_assoc($rs_tasa);
 		$global_tasa_usd = ($row_tasa['montobs'] > 0) ? $row_tasa['montobs'] : 1;
+		$id_tasa = $row_tasa['id'] ? $row_tasa['id'] : 0;
 	}
 	$cedula = $_POST['cedula'];
 	$elprestamo = $_POST['elprestamo'];
@@ -447,7 +449,7 @@ if ($accion == "Solicitar") {	// aprobar
 	/////////////////
 //	$primerdcto='0000-00-00';
 	echo "Creando pr�stamo nuevo numero <strong>$elnumero</strong><br>";
-	$sql="insert into sgcaf310 (codsoc_sdp, cedsoc_sdp, nropre_sdp, codpre_sdp, f_soli_sdp, f_1cuo_sdp, monpre_sdp, monpag_sdp, nrofia_sdp, stapre_sdp, tipo_fianz, cuota, nrocuotas, interes_sd, cuota_ucla, netcheque, nro_acta, fecha_acta, ip, inicial, intereses, quien) values ('$laparte', '$micedula', '$elnumero','$elprestamo','$hoy', '$primerdcto', $monpre_sdp, 0, 0, '$estatus', '',$cuota, $lascuotas, $interes_sd, $cuota, $monpre_sdp, '$nroacta', '$fechaacta', '$ip', $inicial, $intereses_diferidos, '".$_SERVER['REMOTE_ADDR']."')";
+	$sql="insert into sgcaf310 (codsoc_sdp, cedsoc_sdp, nropre_sdp, codpre_sdp, f_soli_sdp, f_1cuo_sdp, monpre_sdp, monpag_sdp, nrofia_sdp, stapre_sdp, tipo_fianz, cuota, nrocuotas, interes_sd, cuota_ucla, netcheque, nro_acta, fecha_acta, ip, inicial, intereses, quien, idtasa) values ('$laparte', '$micedula', '$elnumero','$elprestamo','$hoy', '$primerdcto', $monpre_sdp, 0, 0, '$estatus', '',$cuota, $lascuotas, $interes_sd, $cuota, $monpre_sdp, '$nroacta', '$fechaacta', '$ip', $inicial, $intereses_diferidos, '".$_SERVER['REMOTE_ADDR']."', '$id_tasa')";
 //	echo $sql;
 	$resultado=mysql_query($sql);	
 	$primerdcto=$_POST['primerdcto'];
@@ -1096,11 +1098,13 @@ if ($accion == "Concretar") {	// hacer los asientos y actualizar el prestamo, fa
 	$r_310=mysql_fetch_assoc($a_310);
 	global $global_tasa_usd;
 	$global_tasa_usd = 1;
+	$id_tasa = 0;
 	if ($r_310['enUSD'] == 1) {
-		$sql_tasa = "SELECT montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
+		$sql_tasa = "SELECT id, montobs FROM sgcatasa ORDER BY fecha DESC LIMIT 1";
 		$rs_tasa = mysql_query($sql_tasa);
 		$row_tasa = mysql_fetch_assoc($rs_tasa);
 		$global_tasa_usd = ($row_tasa['montobs'] > 0) ? $row_tasa['montobs'] : 1;
+		$id_tasa = $row_tasa['id'] ? $row_tasa['id'] : 0;
 	}
 	$hoy = date("Y-m-d");
 	$b = $hoy;
@@ -1286,7 +1290,7 @@ if ($accion == "Concretar") {	// hacer los asientos y actualizar el prestamo, fa
 			}
 		}
 		// fin agregar los fiadores
-		$sql="update sgcaf310 set netcheque = $neto_cheque where cedsoc_sdp = '$micedula' and nropre_sdp='$referencia'";
+		$sql="update sgcaf310 set netcheque = $neto_cheque, idtasa = '$id_tasa' where cedsoc_sdp = '$micedula' and nropre_sdp='$referencia'";
 //		echo $sql;
 		$resultado=mysql_query($sql);
 //		$sql="update sgcaf310 set renovado = 1, renova_por = '$elnumero', paga_hasta='$primerdcto-1' where nropre_sdp='$arenovar'" ;
