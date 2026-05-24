@@ -1,29 +1,8 @@
 <?php
-/*
-SELECT nropre_sdp, monpre_sdp, monpag_sdp, cuota_ucla, codpre_sdp, concat(trim(cuent_pres),'-',substr(cod_prof,1,4)) as cuent_p, concat(trim(cuent_int),'-',substr(cod_prof,1,4)) as cuent_d, otro_int as cuent_d, ced_prof, cod_prof, concat(ape_prof,' ',nombr_prof) as nombre, descr_pres from sgcaf310, sgcaf200, sgcaf360 where (codpre_sdp=cod_pres) and (dcto_sem) and (codsoc_sdp=cod_prof) and (stapre_sdp='A' and ! renovado) order by cod_pres, ced_prof limit 5
-2.9199 seg.
-
-SELECT nropre_sdp, monpre_sdp, monpag_sdp, cuota_ucla, codpre_sdp, concat(trim(cuent_pres),'-',substr(cod_prof,1,4)) as cuent_p, concat(trim(cuent_int),'-',substr(cod_prof,1,4)) as cuent_d, otro_int as cuent_d, ced_prof, cod_prof, concat(ape_prof,' ',nombr_prof) as nombre from sgcaf310, sgcaf200, sgcaf360 where (codpre_sdp=cod_pres) and (dcto_sem) and (codsoc_sdp=cod_prof) and (stapre_sdp='A' and ! renovado) order by cod_pres, ced_prof limit 5
-2.8321 seg.
-
-SELECT nropre_sdp, monpre_sdp, monpag_sdp, cuota_ucla, codpre_sdp, concat(trim(cuent_pres),'-',substr(cod_prof,1,4)) as cuent_p, concat(trim(cuent_int),'-',substr(cod_prof,1,4)) as cuent_d, otro_int as cuent_d, ced_prof, cod_prof, concat(ape_prof,' ',nombr_prof) as nombre from sgcaf310, sgcaf200, sgcaf360 where (codpre_sdp=cod_pres) and (dcto_sem) and (codsoc_sdp=cod_prof) and (stapre_sdp='A') order by ced_prof, cod_pres limit 5
-
-delimiter //
-
-mysql> 
-CREATE PROCEDURE simpleproc (OUT fechanomina DATE, OUT dcto_sem BOOL)
-BEGIN
-
-   SELECT COUNT(*) INTO param1 FROM t;
-END
-//
-
-*/
 include("head.php");
-//include("popcalendario/escribe_formulario.php");
 ?>
 <script language="javascript">
-//Creo una función que imprimira en la hoja el valor del porcentanje asi como el relleno de la barra de progreso
+//Creo una funciï¿½n que imprimira en la hoja el valor del porcentanje asi como el relleno de la barra de progreso
 function callprogress(vValor){
  document.getElementById("getprogress").innerHTML = vValor;
  document.getElementById("getProgressBarFill").innerHTML = '<div class="ProgressBarFill" style="width: '+vValor+'%;"></div>';
@@ -40,23 +19,9 @@ function callprogress(vValor){
 <script language="javascript">
 function abrir2Ventanas(fechadescuento)
 {
-// window.open("06_Inventario_actuallist.asp","prueba1", "width=385,height=180,top=0,left=0',status,toolbar =1,scrollbars,location");
-// window.open("leftmenu.htm","prueba2","width=385,he ight=180,top=0,left=395,status,toolbar=1,scrollbar s,location");
-window.open("depositobancopdf1.php?fechadescuento="+fechadescuento,"parte1","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");	// los primeros 500 socios	width=385,height=180,
-/*
-window.open("depositobancopdf2.php?fechadescuento="+fechadescuento,"parte2","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
-// "width=385,height=180,top=0,left=395,status,toolbar=1,scrollbar s,location");	// los demas
-*/
-window.open("depositobancopdf3.php?fechadescuento="+fechadescuento,"resumen","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
-//,"width=385,height=180,top=0,left=395,status,toolbar=1,scrollbar s,location");	// resumen de los montos
-window.open("depositobancopdf4.php?fechadescuento="+fechadescuento,"banco","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
-// "width=385,height=180,top=0,left=395,status,toolbar=1,scrollbar s,location");	// el listado a banco
-/*
-window.open("depositobancopdf5.php?fechadescuento="+fechadescuento,"amortiza","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
-*/
-// "width=385,height=180,top=0,left=395,status,toolbar=1,scrollbar s,location");	// amortizacion / capital
-//window.open("depositobancopdf6.php?fechadescuento="+fechadescuento,"descargar","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
-// "width=385,height=180,top=0,left=395,status,toolbar=1,scrollbar s,location");	// amortizacion / capital
+	window.open("depositobancopdf1.php?fechadescuento="+fechadescuento,"parte1","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");	
+	window.open("depositobancopdf3.php?fechadescuento="+fechadescuento,"resumen","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
+	window.open("depositobancopdf4.php?fechadescuento="+fechadescuento,"banco","top=0,left=395,status=no,toolbar=no,scrollbar=yes,location=no,type=fullWindow,fullscreen");
 }
 
 var oldLink = null;
@@ -208,7 +173,7 @@ if (!$ip) {$ip = $_SERVER['REMOTE_ADDR'];}
 if (!$accion) {
 	echo "<div id='div1'>";
 	echo "<form action='depositobanco2.php?accion=ListadoDeCuotas' name='form1' method='post'>";
-	echo '<fieldset><legend>Información Para Deposito de Prestamos</legend>';
+	echo '<fieldset><legend>Informaciï¿½n Para Deposito de Prestamos</legend>';
 	echo 'Fecha en que se realiza el Descuento: ';
 /*
 <script type="text/javascript">
@@ -256,7 +221,7 @@ onclick="return showCalendar('sel3', '%d/%m/%Y');"><br />
 		weekNumbers    :    false, 
 		range          :     [<?php echo $rango; ?>],
 
-// desactivacion de 18 años pa' tras
+// desactivacion de 18 aï¿½os pa' tras
 
 
 /*
@@ -296,7 +261,7 @@ onclick="return showCalendar('sel3', '%d/%m/%Y');"><br />
 	echo '</fieldset>';
 	echo '</div>';
 
-	echo '<fieldset><legend>Atentos con esta información</legend>';
+	echo '<fieldset><legend>Atentos con esta informaciï¿½n</legend>';
 	echo '<br><h1>Para Descontar<input type="checkbox" name="descontar" value = "on"  align="right"/><br /></h1>';
 	echo '% de Descuento ';
 	echo '<input name="porcentaje" type="text" id="porcentaje" value="100" size="7" maxlength="7" />';
@@ -347,8 +312,8 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 			echo '<input type="hidden" name="nombre_archivo" value = "'.$nombre_archivo.'"/>';
 			echo '<input type="hidden" name="nominasnormales" value = "on"/>';
 			$fechadescuento=$_POST['fechadelpago'];
-			echo '<fieldset><legend>Recopilando información Para Descuentos de Prestamos al '.$fechadescuento.'</legend>';
-			echo '<h2>Preparando información...</h2>';
+			echo '<fieldset><legend>Recopilando informaciï¿½n Para Descuentos de Prestamos al '.$fechadescuento.'</legend>';
+			echo '<h2>Preparando informaciï¿½n...</h2>';
 			$fechadescuento=convertir_fecha($fechadescuento);
 /*
 			if ($flash == 'on')
@@ -420,7 +385,7 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 
 				$cuantos++;
 				$porcenta = $cuantos * 100 / $ValorTotal; //saco mi valor en porcentaje
-				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la función JS(JavaScript) para actualizar el progreso
+				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la funciï¿½n JS(JavaScript) para actualizar el progreso
 				flush(); //con esta funcion hago que se muestre el resultado de inmediato y no espere a terminar todo el bucle con los 25 registros para recien mostrar el resultado
 				ob_flush();
 
@@ -428,9 +393,9 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 				revisar_prestamo($r200,$a_310,$a_360,$fechadescuento,$micedula,$ip,$gestor);
 			} // ($r200 = mysql_fetch_assoc($a_200))
 			echo '<input type="hidden" name="fechadescuento" value="'.$fechadescuento.'">';
-			echo '<h2>Información Lista...</h2><br>';
+			echo '<h2>Informaciï¿½n Lista...</h2><br>';
 			echo '<h2>Se ha generado el archivo '.$nombre_archivo.'<br> para su procesamiento a banco</h2>';
-			echo '<input type="submit" name="Submit" value="Impresión de Listados" onClick="abrir2Ventanas(';
+			echo '<input type="submit" name="Submit" value="Impresiï¿½n de Listados" onClick="abrir2Ventanas(';
 			echo "'";
 			echo $fechadescuento;
 			echo "'";
@@ -520,7 +485,7 @@ if (($accion=='Abonar')) { // and ($nominasnormales == 'on')) {
 		weekNumbers    :    false, 
 		range          :     [<?php echo $rango; ?>],
 
-// desactivacion de 18 años pa' tras
+// desactivacion de 18 aï¿½os pa' tras
 
 
 /*
@@ -589,6 +554,7 @@ function AsientoDescuento($fechadescuento)
 		$col_listado++;
 //		$header[$col_listado] =trim($r360['descr_pres']).'('.$r360['cod_pres'].')' ;
 		$header[$col_listado] =''.$r360['cod_pres'].'' ;
+		$es_usd[$col_listado] = $r360['enUSD'];
 		$cpc[$col_listado] =trim($r360['cuent_pres']);
 		if (($header[$col_listado] == '034') or ($header[$col_listado] == '069'))
 		{
@@ -636,7 +602,7 @@ function AsientoDescuento($fechadescuento)
 	echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$asiento'>$asiento </a></strong> <br>";
 	$cuento='Descuento de Prestamos '.$_SESSION['tipo'];
 	$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$asiento', '$b', '','',0,0,0,0,0,0,0,'$cuento')"; 
-	if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+	if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 
 	$sql_nopr=$condicion_sql." from sgcanopr where ('$fechadescuento' = fecha) order by cedula "; //  limit 20";
 //	die($sql_nopr);
@@ -660,7 +626,7 @@ function AsientoDescuento($fechadescuento)
 
 				$cuantos++;
 				$porcenta = $cuantos * 100 / $ValorTotal; //saco mi valor en porcentaje
-				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la función JS(JavaScript) para actualizar el progreso
+				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la funciï¿½n JS(JavaScript) para actualizar el progreso
 				flush(); //con esta funcion hago que se muestre el resultado de inmediato y no espere a terminar todo el bucle con los 25 registros para recien mostrar el resultado
 				ob_flush();
 
@@ -690,13 +656,12 @@ function AsientoDescuento($fechadescuento)
 //					$debe=($r_nopr[$item] / (1 + ($interes[$prestamos]/100)));
 					$debe=($r_nopr[$item] / (1 + ($esteinteres/100)));
 					$elinteres=$r_nopr[$item]-$debe;
-/*
-					if (($header[$prestamos] == '045') or ($header[$prestamos] == '044'))
-					{
-						$debe=$r_nopr[$item];
-						$elinteres=0;
+
+					if ($es_usd[$prestamos] == 1) {
+						$debe = convertir_monto_usd_bs($debe, $r_nopr[$itemn], $r_nopr['cedula']);
+						$elinteres = convertir_monto_usd_bs($elinteres, $r_nopr[$itemn], $r_nopr['cedula']);
 					}
-*/
+
 					$minteres[$prestamos]+=$elinteres;
 //					echo $minteres[$prestamos]. '- '.$elinteres.'<br>';
 					$cuentaxpagar=$cpc[$prestamos];
@@ -793,6 +758,7 @@ function AsientoAbono($fechadescuento, $fechaasiento)
 		$col_listado++;
 //		$header[$col_listado] =trim($r360['descr_pres']).'('.$r360['cod_pres'].')' ;
 		$header[$col_listado] =''.$r360['cod_pres'].'' ;
+		$es_usd[$col_listado] = $r360['enUSD'];
 //		echo $header[$col_listado];
 		$totales[$col_listado]=0;
 		$campo='colpre'.$col_listado;
@@ -829,7 +795,7 @@ function AsientoAbono($fechadescuento, $fechaasiento)
 	echo "Generando encabezado contable <strong><a target=\"_blank\" href='editasi2.php?asiento=$asiento'>$asiento </a></strong> <br>";
 	$cuento='Deposito a Banco de Prestamos '.$_SESSION['tipo'];
 	$sql = "INSERT INTO sgcaf830 (enc_clave, enc_fecha, enc_desco, enc_desc1, enc_debe, enc_haber, enc_item, enc_dif, enc_igual, enc_refer, enc_sw, enc_explic) VALUES ('$asiento', '$b', '','',0,0,0,0,0,0,0,'$cuento')"; 
-	if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para añadir Asientos.<br>".$sql);
+	if (!mysql_query($sql)) die ("El usuario $usuario no tiene permiso para aï¿½adir Asientos.<br>".$sql);
 
 	$sql_nopr=$condicion_sql." from sgcanopr where ('$fechadescuento' = fecha) order by cedula "; //  limit 20";
 //	 echo $sql_nopr;
@@ -853,7 +819,7 @@ function AsientoAbono($fechadescuento, $fechaasiento)
 
 				$cuantos++;
 				$porcenta = $cuantos * 100 / $ValorTotal; //saco mi valor en porcentaje
-				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la función JS(JavaScript) para actualizar el progreso
+				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la funciï¿½n JS(JavaScript) para actualizar el progreso
 				flush(); //con esta funcion hago que se muestre el resultado de inmediato y no espere a terminar todo el bucle con los 25 registros para recien mostrar el resultado
 				ob_flush();
 
@@ -875,6 +841,9 @@ function AsientoAbono($fechadescuento, $fechaasiento)
 				if ($r_nopr[$item] > 0)
 				{	
 					$debe=$r_nopr[$item];
+					if ($es_usd[$prestamos] == 1) {
+						$debe = convertir_monto_usd_bs($debe, $r_nopr[$item2], $r_nopr['cedula']);
+					}
 					$cuenta1=$cuentaxpagar.'-'.substr($r_nopr["codigo"],1,4);
 					$referencia=$r_nopr[$item2];
 //					echo $item2;
@@ -925,7 +894,8 @@ function listadotxt($r200,$totalxsocio,$gestor)
 		$comisionbancaria = round($comisionbancaria, 1);
 		$totalxsocio= $totalxsocio + $comisionbancaria;
 	}
-	$monto=trim($totalxsocio*100);
+	$totalxsocio_format = number_format($totalxsocio, 2, '.', '');
+	$monto=trim($totalxsocio_format*100);
 	// quito el punto
 	$sinpunto='';
 	for ($i=0;$i<strlen($monto);$i++)
@@ -1001,7 +971,13 @@ function acumular($r200,$r310,$a_360,$fechadescuento,$micedula,&$primeravez,$ip,
 				$saldo=$r310['monpre_sdp']-$r310['monpag_sdp'];
 				$tipo=$r310['codpre_sdp'];
 				$capital=$lacuota;
-				$totalxsocio+=$capital;
+
+				$monto_sumar = $capital;
+				if ($r360['enUSD'] == 1) {
+					$monto_sumar = convertir_monto_usd_bs($monto_sumar, $elnumero, $micedula);
+				}
+				$totalxsocio+=$monto_sumar;
+
 				$i2=0;
 //				echo $r360['i_max_pres']. ' - ' .$r310['nrocuotas'].' - '.$saldo.' - '.'<br>';
 				$interes=cal_int($r360['i_max_pres'],$r310['nrocuotas'],$saldo,$factor_divisible = 24,$z=0,$i2);
@@ -1056,6 +1032,7 @@ function QuienesDesconte($fechadescuento, $fechaasiento)
 		$col_listado++;
 //		$header[$col_listado] =trim($r360['descr_pres']).'('.$r360['cod_pres'].')' ;
 		$header[$col_listado] =''.$r360['cod_pres'].'' ;
+		$es_usd[$col_listado] = $r360['enUSD'];
 		$cpc[$col_listado] =trim($r360['cuent_pres']);
 		if ($header[$col_listado] == '034') 
 		{
@@ -1105,7 +1082,7 @@ function QuienesDesconte($fechadescuento, $fechaasiento)
 /*
 				$cuantos++;
 				$porcenta = $cuantos * 100 / $ValorTotal; //saco mi valor en porcentaje
-				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la función JS(JavaScript) para actualizar el progreso
+				echo "<script>callprogress(".round($porcenta).")</script>"; //llamo a la funciï¿½n JS(JavaScript) para actualizar el progreso
 				flush(); //con esta funcion hago que se muestre el resultado de inmediato y no espere a terminar todo el bucle con los 25 registros para recien mostrar el resultado
 				ob_flush();
 
@@ -1140,11 +1117,16 @@ function QuienesDesconte($fechadescuento, $fechaasiento)
 					if ((substr(trim($r_nopr[$itemn]), -1) < 2)  and $songiros == true)
 						$cuenta1=$cingreso;
 
+					$monto_mostrar = $r_nopr['colpre1'];
+					if ($es_usd[1] == 1) {
+						$monto_mostrar = convertir_monto_usd_bs($monto_mostrar, $r_nopr['colnro1'], $r_nopr['cedula']);
+					}
+
 					echo '<tr>';
 					echo '<td>'.$r_nopr['colnro1'].'</td>';
 					echo '<td>'.$r_nopr['codigo'].'</td>';
 					echo '<td>'.$r_nopr['nombre'].'</td>';
-					echo '<td align="right">'.number_format($r_nopr['colpre1'],2,'.',',').'</td>';
+					echo '<td align="right">'.number_format($monto_mostrar,2,'.',',').'</td>';
 	
 					$registros++;
 					echo '<td class="centro azul"><input type="checkbox" id="cancelar'.$registros.'" name="cancelar'.$registros.'" value="'.$r_nopr["colnro1"] .'" onClick="calccanc()" ';
