@@ -213,6 +213,7 @@ $pdf->SetX($p[7]);		$pdf->Cell($w[7],$alto,number_format($gsactual,2,'.',','),0,
 $pdf->SetX($p[8]);		$pdf->Cell($w[8],$alto,number_format($gtinteres,2,'.',','),0,0,'R');
 $pdf->SetX($p[9]);		$pdf->Cell($w[9],$alto,number_format($gtcuota+$gtinteres,2,'.',','),0,0,'R');
 $pdf->SetFont('Arial','',7);
+header('Content-Type: application/pdf');
 $pdf->Output('reportesprestamos/'.$fechadescuento.'amortizacion.pdf');
 $pdf->Output();
 set_time_limit(30);

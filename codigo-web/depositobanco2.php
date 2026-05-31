@@ -150,9 +150,9 @@ function showFlatCalendar() {
 <?php
 include("paginar.php");
 
+extract($_SESSION);
 extract($_GET);
 extract($_POST);
-extract($_SESSION);
 
 if (!$link OR !$_SESSION['empresa']) {
 	include("noempresa.php");
@@ -160,9 +160,7 @@ if (!$link OR !$_SESSION['empresa']) {
 }
 ?>
 <body onLoad="showFlatCalendar()">
- <?php // if (!$bloqueo) {echo $onload;}>>
-// <body <?php if (!$bloqueo) {echo $onload;}
-
+<?php 
 $readonly=" readonly='readonly'";
 include("arriba.php");
 // $menu61=1;
@@ -308,40 +306,14 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 		else {
 
 			echo "<div id='div1'>";
-			echo "<form action='depositobanco2.php?accion=Abonar' name='form1' method='post' onsubmit='return realizo_abono_banco(form1)'>";
+			echo "<form action='depositobanco2.php' name='form1' id='form1' method='post' onsubmit='return realizo_abono_banco()'>";
+			echo '<input type="hidden" name="accion" value="Abonar">';
 			echo '<input type="hidden" name="nombre_archivo" value = "'.$nombre_archivo.'"/>';
 			echo '<input type="hidden" name="nominasnormales" value = "on"/>';
 			$fechadescuento=$_POST['fechadelpago'];
-			echo '<fieldset><legend>Recopilando informaci�n Para Descuentos de Prestamos al '.$fechadescuento.'</legend>';
-			echo '<h2>Preparando informaci�n...</h2>';
+			echo '<fieldset><legend>Recopilando informacin Para Descuentos de Prestamos al '.$fechadescuento.'</legend>';
+			echo '<h2>Preparando informacin...</h2>';
 			$fechadescuento=convertir_fecha($fechadescuento);
-/*
-			if ($flash == 'on')
-			{
-				$sql_360="select * from sgcaf360 where (cod_pres='023' or cod_pres='053' or cod_pres='057' or cod_pres='058') order by cod_pres";
-				$_SESSION['tipo']='Flash ';
-			}
-			else 
-				if ($libreria == 'on')
-				{
-					$sql_360="select * from sgcaf360 where (cod_pres='032' or cod_pres='040' or cod_pres='041' or cod_pres='049') order by cod_pres";
-					$_SESSION['tipo']='Libreria ';
-				}
-			else 
-				if ($cupon == 'on')
-				{
-					$sql_360="select * from sgcaf360 where (cod_pres='CDA') order by cod_pres";
-					echo $sql_360;
-					$_SESSION['tipo']='Cupon de Alimentacion ';
-				}
-			else 
-				{
-					$sql_360="select * from sgcaf360 where (cod_pres!='032' and cod_pres!='040' and cod_pres!='041' and cod_pres!='049') and (cod_pres!='023' and cod_pres!='053' and cod_pres!='057' and cod_pres!='058') order by cod_pres";
-					$_SESSION['tipo']='(Estatutarios / Comerciales ) ';
-
-				}
-*/
-//			echo $sql_360;
 			if ($estatutarios == 'on')
 			{
 				$sql_360="select * from sgcaf360 where (dcto_sem = 1) order by cod_pres";
@@ -395,30 +367,13 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 			echo '<input type="hidden" name="fechadescuento" value="'.$fechadescuento.'">';
 			echo '<h2>Informaci�n Lista...</h2><br>';
 			echo '<h2>Se ha generado el archivo '.$nombre_archivo.'<br> para su procesamiento a banco</h2>';
-			echo '<input type="submit" name="Submit" value="Impresi�n de Listados" onClick="abrir2Ventanas(';
-			echo "'";
-			echo $fechadescuento;
-			echo "'";
-//			echo "'".'&downloadfile='.$nombre_archivo.'&';
-			echo ');">  ';
-//			echo '<input type="submit" name="Submit" value="Realizar Abono " />';
-			echo '</legend>';
+			echo '<input type="submit" name="Submit" value="Impresin de Listados" onClick="abrir2Ventanas(\''.$fechadescuento.'\');">  ';
+			echo '<input type="submit" name="Submit" value="Realizar Abono ">';
+			echo '</fieldset>';
 			echo '</form>';
 			echo '</div>';	
 		}
 		fclose($gestor);
-/*
-		$downloadfile=nombre_archivo;
-		echo 'header ("Content-Disposition: attachment; filename=\".$downloadfile.\"" )';
-//		header ("Content-Disposition: attachment; filename=\"exportar.txt\"" );
-		echo 'header("Content-Type: application/force-download")';
-		echo 'header("Content-Transfer-Encoding: binary")';
-		echo 'header("Content-Length: ".strlen($downloadfile))';
-// 		header("Content-Length: ".strlen($filecontent));
-		echo 'header("Pragma: no-cache")';
-		echo 'header("Expires: 0")' ;
-		echo $downloadfile;
-*/
 	}
 	else {
 		echo "<h2>No se puede crear el archivo ($nombre_archivo) revise permisologia</h2>";
@@ -439,7 +394,6 @@ if (($accion=='Abonar')) { // and ($nominasnormales == 'on')) {
 	$usuario=$_SERVER['REMOTE_ADDR'];
 	$sql_bita="insert into sgcabita (cuento, ip, quien) values ('$cuento', '$ip', '$usuario')";
 	$a_bita=mysql_query($sql_bita);
-
 	
 	echo '<h2>Puede proceder luego de la impresion de los listados a <br>realizar el abono a prestamos y el asiento contable y';
 	echo '<br>recuerde obtener descargar el archivo </h2><h1>'.$nombre_archivo.'</h1><h2> para enviar al banco</h2>';
@@ -504,16 +458,6 @@ if (($accion=='Abonar')) { // and ($nominasnormales == 'on')) {
 	echo '<input type="hidden" name="fechadescuento" value="'.$fechadescuento.'">';
 	echo '<input type="submit" name="deposito" value="Generar Asiento Contable " />';
 	echo '</form>';
-
-
-//	echo "<form action='bajpre.php' name='form1' method='post'>";
-//	echo '<input type="submit" name="Submit" value="Descargar Archivo TXT"';
-//	echo '</form>';
-	/// hacer el asiento ver asiento original con intereses y demas
-/*	echo '<script language="JavaScript" src="depositobancopdf1.php?fechadescuento=$fechadescuento"></script>';  */
-//	echo '<a href="" onClick="abrir2Ventanas();">KK</a>';
-//	echo "<a target=\"_blank\" href=\"depositobancopdf1.php?fechadescuento=$fechadescuento\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">Imprimir Listados de Descuentos</a>"; 	
-
 
 	echo '</div>';
 }	// ($accion=='ImpresionListados') 
@@ -656,6 +600,7 @@ function AsientoDescuento($fechadescuento)
 //					$debe=($r_nopr[$item] / (1 + ($interes[$prestamos]/100)));
 					$debe=($r_nopr[$item] / (1 + ($esteinteres/100)));
 					$elinteres=$r_nopr[$item]-$debe;
+					$descuentooriginal = $debe;
 
 					if ($es_usd[$prestamos] == 1) {
 						$debe = convertir_monto_usd_bs($debe, $r_nopr[$itemn], $r_nopr['cedula']);
@@ -690,7 +635,10 @@ function AsientoDescuento($fechadescuento)
 					{
 //						echo 'descontando... ignorado temporalmnente<br>';
 
-						$sql310="update sgcaf310 set monpag_sdp=monpag_sdp+'$debe' where nropre_sdp='".$r_nopr[$itemn]."'";
+						if ($es_usd[$prestamos] == 1)
+							$sql310="update sgcaf310 set monpag_sdp=monpag_sdp+'$descuentooriginal' where nropre_sdp='".$r_nopr[$itemn]."'";
+						else
+							$sql310="update sgcaf310 set monpag_sdp=monpag_sdp+'$debe' where nropre_sdp='".$r_nopr[$itemn]."'";
 						$res310=mysql_query($sql310);
 						$sql310="select monpre_sdp-monpag_sdp as saldo from sgcaf310 where nropre_sdp='".$r_nopr[$itemn]."'";
 						$res310=mysql_query($sql310);

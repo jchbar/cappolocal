@@ -143,6 +143,7 @@ $pdf->SetX($p[5]);
 $pdf->Cell($w[5],$alto,number_format($general,2,".",","),0,0,'R',1);
 $pdf->SetFont('Arial','',7);
 $pdf->Output('reportesprestamos/'.$fechadescuento.'banco.pdf');
+header('Content-Type: application/pdf');
 $pdf->Output();
 $sql="select now() as fechagen";
 $res=mysql_query($sql);

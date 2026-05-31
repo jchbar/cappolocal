@@ -313,7 +313,7 @@ for ($if = 1; $if <= $_POST['nrosemanas']; $if++)
 		else {
 
 			echo "<div id='div1'>";
-			echo "<form action='frm25.php?accion=Abonar' name='form1' method='post' onsubmit='return realizo_abono_banco(form1)'>";
+			echo "<form action='frm25.php?accion=Abonar' name='form1' method='post' onsubmit='return realizo_abono_banco(this)'>";
 			echo '<input type="hidden" name="nombre_archivo" value = "'.$nombre_archivo.'"/>';
 			echo '<input type="hidden" name="nrosemanas" value = '.$_POST['nrosemanas'].'>';
 			echo '<input type="hidden" name="nominasnormales" value = "off"/>';

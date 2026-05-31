@@ -343,7 +343,7 @@ if (($accion=='ListadoDeCuotas') ) {	// and ($nominasnormales == 'on')
 		else {
 
 			echo "<div id='div1'>";
-			echo "<form action='depositobanco2.php?accion=Abonar' name='form1' method='post' onsubmit='return realizo_abono_banco(form1)'>";
+			echo "<form action='depositobanco2.php?accion=Abonar' name='form1' method='post' onsubmit='return realizo_abono_banco(this)'>";
 			echo '<input type="hidden" name="nombre_archivo" value = "'.$nombre_archivo.'"/>';
 			echo '<input type="hidden" name="nominasnormales" value = "on"/>';
 			$fechadescuento=$_POST['fechadelpago'];
