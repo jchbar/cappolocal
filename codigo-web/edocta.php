@@ -1,24 +1,4 @@
 <?php
-//Copyright (C) 2000-2006  Antonio Grandío Botella http://www.antoniograndio.com
-//Copyright (C) 2000-2006  Inmaculada Echarri San Adrián http://www.inmaecharri.com
-
-//This file is part of Catwin.
-
-//CatWin is free software; you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation; either version 2 of the License, or
-//(at your option) any later version.
-
-//CatWin is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details:
-//http://www.gnu.org/copyleft/gpl.html
-
-//You should have received a copy of the GNU General Public License
-//along with Catwin Net; if not, write to the Free Software
-//Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 include("head.php");
 
 if (!$link OR !$_SESSION['empresa']) {
@@ -30,31 +10,7 @@ if ($_GET['emp'] == 1) {$_GET['n'] = 1;}
 
 if ($_GET['n'] == 1) {
 	$onload="onload=\"foco('asiento')\"";
-	//$result = mysql_query("SELECT max(asiento) FROM asientos");
-	//$row = mysql_fetch_row($result);
-	//$asiento = $row[0] + 1;
-/*
-	$fila = mysql_fetch_array(mysql_query("SELECT * FROM sgcaf8co"));
-	$asiento = $fila[0] + 1;
-	mysql_query("UPDATE sgcaf8co SET con_compr = '$asiento' WHERE 1");
-	// Cojo el valor de la fecha en que se hizo el último Asiento
-	$result = mysql_query("SELECT date_format(con_ultfec,'%d/%m/%y') AS ultfechax FROM sgcaf8co");
-	$row = mysql_fetch_array($result);
-	$fecha = $row[0];
-*/
 } else {
-/*
-	$onload="onload=\"foco('cuenta11')\"";
-	$readonly=" readonly='readonly'";
-	$asiento = $_POST['asiento'];
-	$fecha = $_POST['fecha'];
-	$fecha = $_POST['fecha'];
-	$tipo =$_POST['tipo'];
-	$debcre= $_POST['debcre'];
-	$cuenta1= $_POST['cuenta1'];
-	$referencia =$_POST['referencia'];
-	$elmonto=$_POST['elmonto'];
-*/
 }
 
 ?>
@@ -76,23 +32,6 @@ if (!$cedula) {
 	exit;
 
 }
-/*
-<input type='text' name='lafecha' size='8' maxlength='8' value="<?php echo $fecha;>" <?php echo $readonly;>>
-<input type="button" name="selfecha" value="..."  onclick="displayDatePicker('fecha','','dmy');">
-*/
-
-/*
-if (!$_POST['asiento']) {
-	escribe_formulario_fecha_vacio("fecha","form1",'',2,$readonly); 
-	echo '<p /> ';
-	$temp = "Primer Registro:";
-} else {
-	echo $fecha.'<p />';
-	echo "<input type = 'hidden' value ='".$fecha."' name='fecha'>"; 
-	$temp = "Siguiente Registro:";
-	$expli = mysql_fetch_array(mysql_query("SELECT enc_explic FROM sgcaf830 WHERE enc_clave = '".$_POST['asiento']."'"));
-}
-*/
 
 if ($cedula) {
 	$result = mysql_query("SELECT * FROM sgcaf200 WHERE ced_prof = '$cedula' ");
@@ -146,12 +85,7 @@ if ($cedula) {
 		$cedula=substr($cedula,0,4).'.'.substr($cedula,4,3).'.'.substr($cedula,7,3);
 		$sql="select * from unido where cedula= '$cedula' and ano='2004' order by ano";
 
-		// $fila2=mysql_query($sql);
-		// $fila2=mysql_fetch_assoc($fila2);  
-		// echo $sql;
-		// echo "<a target=\"_blank\" href=\"dividen2.php\" onClick=\"info.html\', \'\',\'width=250, height=190\')\">  >>>Imprimir Resultado<<<</a></h2>"; 
-
-		echo '<tr><th align="center" colspan="6" width="800">Descripción</th><th colspan="1" width="100">Ahorros Bs.F.</th><th colspan="2" width="75">Total Bs.F.</th></tr>';
+		echo '<tr><th align="center" colspan="6" width="800">Descripción</th><th colspan="1" width="100">Ahorros Bs</th><th colspan="2" width="75">Total Bs</th></tr>';
 		$sql_aporte="SELECT * FROM aportep WHERE tipo = 'R' ORDER BY fecha DESC LIMIT 1 ";
 		$resul_aporte=mysql_query($sql_aporte);
 		$faporte=mysql_fetch_assoc($resul_aporte);
@@ -174,7 +108,7 @@ if ($cedula) {
 		$registros12=mysql_num_rows($result);
 		if ($registros12 > 0) {
 		echo '<tr><th align="center" colspan="8" width="800">SALDO DE PRESTAMOS AL </th></tr>';
-		echo '<tr><th align="center" width="50"># Prest.</th><th align="center" width="250">Tipo de Préstamo</th><th align="center" width="100">Monto</th><th align="center" width="100"># NC</th><th align="center" width="100">CC</th><th align="center" width="100">Cuota Bs.F</th><th align="center" width="100">1er Dcto.</th><th align="center" width="100">Saldo</th></tr>';
+		echo '<tr><th align="center" width="50"># Prest.</th><th align="center" width="250">Tipo de Préstamo</th><th align="center" width="100">Monto</th><th align="center" width="100"># NC</th><th align="center" width="100">CC</th><th align="center" width="100">Cuota Bs</th><th align="center" width="100">1er Dcto.</th><th align="center" width="100">Saldo</th></tr>';
 		//echo $sql.'<br>';
 	// -- $result=mysql_query($sql);
 	$sql = "SELECT count(*) as numero, SUM(monpre_sdp-monpag_sdp) as deuda from sgcaf310 where codpre_sdp='046' and cedsoc_sdp='$cedula' and stapre_sdp = 'A' and (!renovado) group by cedsoc_sdp ";
@@ -196,7 +130,16 @@ if ($cedula) {
 
 	$fianzas = $afectan = $noafectan = $semanal = 0;
 	while($row=mysql_fetch_assoc($result)) {
-		echo '<tr><td align="center" width="50" class="blanco">'.$row['nropre_sdp'].'</td><td align="center" width="250" class="blanco">'.$row['descr_pres'].'</td><td align="center" width="100" class="blanco">'.number_format($row['monpre_sdp'],2,'.',',').'</td><td align="center" width="100" class="blanco">'.number_format($row['nrocuotas'],0,',','.').'</td><td align="center" width="100" class="blanco">'.number_format($row['ultcan_sdp'],0,',','.').'</td><td align="center" width="100" class="blanco">'.number_format($row['cuota_ucla'],2,'.',',').'</td><td align="center" width="100" class="blanco">'.convertir_fechadmy ($row['f_1cuo_sdp']).'</td><td align="right" width="100" class="blanco">'.number_format(($row['monpre_sdp']-$row['monpag_sdp']),2,'.',',').'</td></tr>';
+		echo '<tr>
+			<td align="center" width="50" class="blanco">'.$row['nropre_sdp'].'</td>
+			<td align="center" width="250" class="blanco">'.$row['descr_pres'].'</td>
+			<td align="center" width="100" class="blanco">'.number_format($row['monpre_sdp'],2,'.',',').' '.($row['enUSD']=='1'?'(USD)':'').'</td>
+			<td align="center" width="100" class="blanco">'.number_format($row['nrocuotas'],0,',','.').'</td>
+			<td align="center" width="100" class="blanco">'.number_format($row['ultcan_sdp'],0,',','.').'</td>
+			<td align="center" width="100" class="blanco">'.number_format($row['cuota_ucla'],2,'.',',').' '.($row['enUSD']=='1'?'(USD)':'').'</td>
+			<td align="center" width="100" class="blanco">'.convertir_fechadmy ($row['f_1cuo_sdp']).'</td>
+			<td align="right" width="100" class="blanco">'.number_format(($row['monpre_sdp']-$row['monpag_sdp']),2,'.',',').' '.($row['enUSD']=='1'?'(USD)':'').'</td>
+			</tr>';
 		if ($row['retab_pres']==1)
 			$afectan +=($row['monpre_sdp']-$row['monpag_sdp']);
 		else {

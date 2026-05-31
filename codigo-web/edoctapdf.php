@@ -247,7 +247,7 @@ $pdf->Cell(20,6,'#NC',0,0,'C',1);
 $pdf->SetX(120);
 $pdf->Cell(20,6,'CC',0,0,'C',1);
 $pdf->SetX(140);
-$pdf->Cell(20,6,'Cuota Bs. F.',0,0,'C',1);
+$pdf->Cell(20,6,'Cuota',0,0,'C',1);
 $pdf->SetX(160);
 $pdf->Cell(20,6,'1er Dcto.',0,0,'C',1);
 $pdf->SetX(180);
@@ -258,24 +258,24 @@ $result=mysql_query($sql);
 $fianzas = $afectan = $noafectan = $semanal = 0;
 while($row=mysql_fetch_assoc($result)) {
 $linea+=4;
-$pdf->SetFont('Arial','B',10);
+$pdf->SetFont('Arial','',8);
 $pdf->SetY($linea);
 $pdf->SetX(10);
 $pdf->Cell(13,6,$row['nropre_sdp'],0,0,'C',0);
 $pdf->SetX(23);
 $pdf->Cell(57,6,trim($row['descr_pres']),0,0,'C',0);
 $pdf->SetX(80);
-$pdf->Cell(20,6,number_format($row['monpre_sdp'],2,".",","),0,0,'C',0);
+$pdf->Cell(20,6,number_format($row['monpre_sdp'],2,".",",").' '.($row['enUSD']=='1'?'(USD)':''),0,0,'C',0);
 $pdf->SetX(100);
 $pdf->Cell(20,6,number_format($row['nrocuotas'],0,",","."),0,0,'C',0);
 $pdf->SetX(120);
 $pdf->Cell(20,6,number_format($row['ultcan_sdp'],0,",","."),0,0,'C',0);
 $pdf->SetX(140);
-$pdf->Cell(20,6,number_format($row['cuota_ucla'],2,".",","),0,0,'C',0);
+$pdf->Cell(20,6,number_format($row['cuota_ucla'],2,".",",").' '.($row['enUSD']=='1'?'(USD)':''),0,0,'C',0);
 $pdf->SetX(160);
 $pdf->Cell(20,6,convertir_fechadmy1($row['f_1cuo_sdp']),0,0,'C',0);
 $pdf->SetX(180);
-$pdf->Cell(20,6,number_format(($row['monpre_sdp']-$row['monpag_sdp']),2,".",","),0,0,'R',0);
+$pdf->Cell(20,6,number_format(($row['monpre_sdp']-$row['monpag_sdp']),2,".",",").' '.($row['enUSD']=='1'?'(USD)':''),0,0,'R',0);
 if ($row['retab_pres']==1)
 		$afectan +=($row['monpre_sdp']-$row['monpag_sdp']);
 	else $noafectan += ($row['monpre_sdp']-$row['monpag_sdp']);
@@ -714,6 +714,7 @@ $pdf->SetY($linea);
 $pdf->SetX(10);
 $pdf->MultiCell(0,5,$loquedebe,0,C,0);
 
+header('Content-Type: application/pdf');
 $pdf->Output();
 
 
